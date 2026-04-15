@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@variant dark (&:where(.dark, .dark *));
+
+/* ─── Design tokens ─────────────────────────────────── */
+
+@theme {
+	/* Motion */
+	--duration-fast:   150ms;
+	--duration-base:   200ms;
+	--duration-slow:   300ms;
+	--ease-standard:   cubic-bezier(0.2, 0, 0, 1);
+	--ease-enter:      cubic-bezier(0, 0, 0.2, 1);
+	--ease-exit:       cubic-bezier(0.4, 0, 1, 1);
+
+	/* Brand (primary action) */
+	--color-brand:          #18181b;
+	--color-brand-hover:    #3f3f46;
+	--color-brand-active:   #52525b;
+	--color-brand-ring:     #18181b;
+	--color-brand-fg:       #ffffff;
+
+	/* Danger (destructive action) */
+	--color-danger:         #dc2626;
+	--color-danger-hover:   #b91c1c;
+	--color-danger-active:  #991b1b;
+	--color-danger-ring:    #dc2626;
+
+	/* Surface (secondary/ghost backgrounds + borders) */
+	--color-surface:              #ffffff;
+	--color-surface-hover:        #f9fafb;
+	--color-surface-active:       #f4f4f5;
+	--color-surface-border:       #e4e4e7;
+	--color-surface-border-hover: #d4d4d8;
+
+	/* Text */
+	--color-text:           #18181b;
+	--color-text-muted:     #71717a;
+	--color-text-subtle:    #a1a1aa;
+	--color-text-inverted:  #ffffff;
+
+	/* Input */
+	--color-input-border:         #d4d4d8;
+	--color-input-border-hover:   #a1a1aa;
+	--color-input-ring:           #18181b;
+	--color-input-placeholder:    #a1a1aa;
+	--color-input-disabled-bg:    #f4f4f5;
+	--color-input-disabled-text:  #a1a1aa;
+	--color-input-error:          #dc2626;
+	--color-input-error-ring:     #dc2626;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Dark mode overrides ────────────────────────────── */
+
+.dark {
+	--color-brand:          #fafafa;
+	--color-brand-hover:    #f4f4f5;
+	--color-brand-active:   #e4e4e7;
+	--color-brand-ring:     #fafafa;
+	--color-brand-fg:       #18181b;
+
+	--color-danger:         #ef4444;
+	--color-danger-hover:   #f87171;
+	--color-danger-active:  #fca5a5;
+
+	--color-surface:              #27272a;
+	--color-surface-hover:        #3f3f46;
+	--color-surface-active:       #52525b;
+	--color-surface-border:       #3f3f46;
+	--color-surface-border-hover: #52525b;
+
+	--color-text:           #f4f4f5;
+	--color-text-muted:     #a1a1aa;
+	--color-text-subtle:    #71717a;
+
+	--color-input-border:        #3f3f46;
+	--color-input-border-hover:  #52525b;
+	--color-input-ring:          #fafafa;
+	--color-input-disabled-bg:   #27272a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base styles ────────────────────────────────────── */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--color-surface);
+	color:            var(--color-text);
+}
+
+/* ─── View transitions ───────────────────────────────── */
+
+@view-transition {
+	navigation: auto;
+}
+
+::view-transition-old(root) {
+	animation: var(--duration-base) var(--ease-exit) both fade-out;
+}
+
+::view-transition-new(root) {
+	animation: var(--duration-base) var(--ease-enter) both fade-in;
+}
+
+@keyframes fade-out {
+	from { opacity: 1; }
+	to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
 }

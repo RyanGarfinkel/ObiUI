@@ -1,0 +1,48 @@
+---
+title: Patterns/Interactive States
+---
+
+# Interactive States
+
+Every interactive element must implement three distinct states: **hover**, **focus**, and **focus-visible**. These are not interchangeable — each serves a different purpose and a different user.
+
+## The Three States
+
+### Hover
+Signals that an element is interactive. Triggered when a pointer device moves over the element.
+
+- Use a subtle background or color shift — enough to communicate affordance, not enough to distract
+- Never rely on hover alone to convey information (touch devices have no hover)
+
+### Focus
+The element has received focus, by any means (click, tap, keyboard, script). This is the broad state.
+
+- In most cases, you should **not** add visible styles here beyond what already exists
+- Suppress the browser default outline with `focus:outline-none` so mouse/touch users aren't shown a ring they didn't ask for
+
+### Focus Visible
+The element has received focus via **keyboard navigation**. This is the accessibility-critical state.
+
+- Must have a clearly visible ring or outline — do not suppress this
+- Use `focus-visible:ring-2 focus-visible:ring-offset-2` as the baseline
+- Ring color should match the component's intent (primary → blue, destructive → red)
+- Never remove focus-visible styles without providing an equivalent replacement
+
+## Why the Distinction Matters
+
+Mouse users clicking a button don't need a focus ring — they can see where they clicked. Keyboard users tabbing through a page have no other way to know where they are. The `:focus-visible` pseudo-class lets us serve both groups correctly without compromise.
+
+## Implementation Rules
+
+1. Always apply `focus:outline-none` to reset the browser default
+2. Always apply `focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-{color}` to restore a visible ring for keyboard users
+3. Hover and focus-visible must be visually distinct from each other and from the default state
+4. Disabled elements must not show hover or focus states
+
+## Token Usage
+
+| State         | Token                        |
+|---------------|------------------------------|
+| Hover         | Component-level bg/border shift |
+| Focus         | `outline-none` (suppressed)  |
+| Focus Visible | `--ring-color` per variant   |
