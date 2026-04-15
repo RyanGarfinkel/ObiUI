@@ -34,6 +34,15 @@ test: add disabled state tests for Input
 chore: add commitlint and husky
 ```
 
+## Pre-commit Checks
+
+The pre-commit hook runs automatically on every `git commit` and will block if either check fails:
+
+1. **Lint** — `npm run lint` must pass with no errors
+2. **Tests** — `npm test` must pass with no failures
+
+Fix all lint errors and failing tests before committing. Do not bypass the hook with `--no-verify`.
+
 ## Rules
 
 - No scope required — keep it flat

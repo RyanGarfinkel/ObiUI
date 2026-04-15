@@ -125,12 +125,6 @@ export default function CalendarInput({
 
 	useEffect(() =>
 	{
-		if(value)
-			setDisplayMonth({ year: value.getFullYear(), month: value.getMonth() });
-	}, [value]);
-
-	useEffect(() =>
-	{
 		if(!isOpen) return;
 
 		function handleMouseDown(e: MouseEvent)
@@ -232,7 +226,6 @@ export default function CalendarInput({
 					aria-haspopup="dialog"
 					aria-expanded={isOpen}
 					aria-controls={isOpen ? popoverId : undefined}
-					aria-invalid={!!error}
 					aria-describedby={
 						error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined
 					}
