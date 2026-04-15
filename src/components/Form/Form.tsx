@@ -1,6 +1,6 @@
 'use client';
 
-import { FormHTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
+import { FormHTMLAttributes, HTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement>
 {
@@ -40,7 +40,7 @@ export interface FormDescriptionProps
 	children:   ReactNode;
 }
 
-export interface FormMessageProps
+export interface FormMessageProps extends HTMLAttributes<HTMLParagraphElement>
 {
 	className?: string;
 	children?:  ReactNode;
@@ -106,12 +106,12 @@ export function FormDescription({ className = '', children }: FormDescriptionPro
 	);
 }
 
-export function FormMessage({ className = '', children }: FormMessageProps)
+export function FormMessage({ className = '', children, ...props }: FormMessageProps)
 {
 	if(!children) return null;
 
 	return (
-		<p className={`text-sm text-input-error ${className}`} role="alert">
+		<p className={`text-sm text-input-error ${className}`} role="alert" {...props}>
 			{children}
 		</p>
 	);
