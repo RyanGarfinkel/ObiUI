@@ -1,4 +1,10 @@
-import { CodeBlock } from '@/src/docs/components/CodeBlock';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'MCP Server',
+	description: 'Connect Obi UI to Claude or any MCP-compatible AI. The server exposes every component spec, token definition, and design pattern as a live resource.',
+};
 
 const McpPage = () => {
   return (

@@ -13,9 +13,45 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const DESCRIPTION = 'A copy-paste React component library. Install only the components you need, own the source code, and never fight the library.';
+const SITE_URL    = 'https://obi-ui.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'Obi UI',
-  description: 'A design system built for modern React applications',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    template: '%s | Obi UI',
+    default: 'Obi UI — Copy-paste React components',
+  },
+  description: DESCRIPTION,
+  applicationName: 'Obi UI',
+  keywords: [
+    'react', 'component library', 'design system', 'tailwind', 'tailwind v4',
+    'copy-paste', 'ui components', 'accessible', 'next.js', 'open source',
+    'headless', 'radix', 'shadcn', 'react components', 'typescript',
+    'wcag', 'keyboard navigation', 'dark mode', 'theming', 'css variables',
+  ],
+  authors: [{ name: 'Obi UI', url: 'https://github.com/RyanGarfinkel/ObiUI' }],
+  openGraph: {
+    title: 'Obi UI — Copy-paste React components',
+    description: DESCRIPTION,
+    type: 'website',
+    url: SITE_URL,
+    siteName: 'Obi UI',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Obi UI — Copy-paste React components',
+    description: DESCRIPTION,
+    site: '@obiui',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 const RootLayout = async (

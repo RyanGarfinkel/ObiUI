@@ -1,0 +1,112 @@
+# Obi UI
+
+> A free, open-source copy-paste React component library for Next.js and React applications.
+
+GitHub: https://github.com/RyanGarfinkel/ObiUI
+Docs: https://obi-ui.vercel.app
+
+Obi UI is a design system where components are installed by copying source code into your project — not installed as an npm dependency. Each component is self-contained, accessible, and built with Tailwind v4 CSS custom properties for theming.
+
+## Installation
+
+npx @obi/ui add <component-slug>
+
+Run the initialiser first to set up design tokens:
+
+npx @obi/ui init
+
+This copies globals.css (with all design tokens) into your project and writes obi.config.json.
+
+## Components
+
+### Actions
+
+- button — Button — A clickable control that triggers an action, supporting six visual variants and three sizes.
+
+### Inputs
+
+- input — Input — A single-line text input with optional label, hint, and error messaging. Supports a floating label variant where the label animates inside the field.
+- otp-input — OTPInput — A one-time password input composed of individual single-character cells. Supports keyboard navigation, auto-advance, and paste.
+- textarea — Textarea — A multi-line text input with optional label, hint, and error messaging.
+- radio — Radio — A controlled radio group with accessible markup, custom visual styling, and support for hints and disabled states.
+- switch — Switch — A toggle switch for boolean values, rendered as an accessible button with role="switch".
+- toggle-group — ToggleGroup — A segmented group of toggle buttons where one item (single mode) or many items (multiple mode) can be active at once.
+- checkbox — Checkbox — Controlled or uncontrolled checkbox with optional label.
+- select — Select — Single-value dropdown with arrow-key navigation, typeahead, and subtle open/close animation.
+- combobox — Combobox — A searchable dropdown that filters options as the user types, with single-select and multi-select (pill chip) modes.
+- date-picker — DatePicker — A trigger button that opens a calendar popup for selecting a single date, with full keyboard navigation, min/max bounds, and no external date library.
+
+### Display
+
+- badge — Badge — Inline label for status, category, or count.
+- card — Card — A flexible container component for grouping related content into a distinct visual surface, composed with CardHeader, CardContent, and CardFooter.
+- table — Table — A set of composable table subcomponents for displaying structured, tabular data with sortable columns, row striping, and hover highlights.
+- skeleton — Skeleton — A set of loading placeholder components that mimic content shapes while data is being fetched.
+- typography — Typography — A single component that renders the full typographic scale — headings, body text, code, blockquote, and muted variants — using semantic design tokens.
+- tree — Tree — A collapsible, keyboard-navigable tree view for hierarchical data — file trees, org charts, and nested navigation.
+- timeline — Timeline — A vertical step list with numbered indicators and connector lines, for ordered sequences like setup guides, onboarding flows, and activity feeds.
+- data-table — DataTable — A full-featured, column-definition driven data table with client-side sorting, row selection with indeterminate header checkbox, and pagination.
+- function-plotter — FunctionPlotter — An interactive 2D function plotter with pan, zoom, and support for multiple equations. Enter expressions like x^2 or 2*x+1 and see them graphed in real time.
+- carousel — Carousel — A compound component for cycling through a series of slides with keyboard navigation, dot indicators, and optional auto-play.
+
+### Forms
+
+- form — Form — A set of composable layout primitives for building forms — handling spacing, labeling, error display, and section grouping without owning form state.
+
+### Feedback
+
+- alert — Alert — Contextual feedback banner for success, warning, danger, or info.
+- progress — Progress — Horizontal bar indicating task completion.
+- spinner — Spinner — Animated loading indicator.
+- toast — Toast — Ephemeral notification toasts with auto-dismiss, variants, and optional actions.
+
+### Disclosure
+
+- accordion — Accordion — A compound component for showing and hiding sections of content, supporting single-item and multi-item expansion modes.
+
+### Navigation
+
+- tabs — Tabs — A compound component for switching between related panels of content, with a sliding active-tab indicator.
+- sidebar — Sidebar — Vertical navigation sidebar with sections, links, and dividers.
+- breadcrumb — Breadcrumb — A navigational landmark that shows the user's current location within a site hierarchy.
+
+### Overlay
+
+- command-palette — CommandPalette — A modal command palette overlay with fuzzy search, grouped results, match highlighting, keyboard navigation, and focus trap.
+
+### Charts
+
+- line-chart — LineChart — A line chart for visualising trends over time, supporting multiple series.
+- bar-chart — BarChart — A vertical bar chart for comparing values across categories, with optional stacking.
+- area-chart — AreaChart — A filled area chart for emphasising volume and cumulative values over time.
+- donut-chart — DonutChart — A donut (or pie) chart for part-to-whole proportions across named slices.
+
+### Drag & Drop
+
+- mosaic — Mosaic — A drag-and-drop grid for metric tiles. Users reposition tiles by dragging and resize them by dragging edge handles. Tile content adapts to its current size via a render prop.
+- kanban — KanbanBoard — A drag-and-drop Kanban board with keyboard support. Cards can be dragged between columns and reordered within columns.
+
+### Canvas
+
+- canvas — Canvas — A freehand drawing surface with pen and eraser tools, color palette, variable stroke widths, undo/redo, and PNG download.
+
+## Theming
+
+All components are styled with CSS custom properties (tokens) defined in globals.css. Tokens cover color, radius, and timing values. Swapping token values re-themes every component without modifying source code.
+
+Four built-in themes are provided:
+
+- Zinc (default) — clean, minimal, neutral. Pure white light mode, near-black dark mode.
+- Violet — indigo/violet brand accent, works in both light and dark.
+- Rose — warm rose/pink accent, works in both light and dark.
+- Terminal — high-contrast, monospace-flavored dark theme with a green brand accent.
+
+Dark mode is class-based: add the .dark class to the <html> element. All token values automatically switch.
+
+Theme tokens are applied as CSS custom properties on :root (or a wrapper element for scoped theming). The full token surface includes brand, danger, surface, text, and input color scales.
+
+## MCP Server
+
+An MCP (Model Context Protocol) server is available for AI-native development. Connect it to Claude or any MCP-compatible AI assistant to give it live access to every component specification, token definition, and design pattern. The AI will use the actual docs rather than hallucinated APIs when helping you build with Obi UI.
+
+See the /mcp page in the docs site for setup instructions.

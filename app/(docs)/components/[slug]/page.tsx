@@ -3,10 +3,26 @@ import { TimelineDeployDemo } from '@/src/docs/components/examples/TimelineDeplo
 import { SkeletonShowcase } from '@/src/docs/components/examples/SkeletonShowcase';
 import { ComponentLivePreview } from '@/src/docs/components/ComponentLivePreview';
 import { ComponentPreview } from '@/src/docs/components/ComponentPreview';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
 import { PropsTable } from '@/src/docs/components/PropsTable';
 import { getComponent, registry } from '@/src/docs/registry';
-import { CodeBlock } from '@/src/docs/components/CodeBlock';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+
+export const generateMetadata = async (
+	{ params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> =>
+{
+	const { slug } = await params;
+	const entry = getComponent(slug);
+
+	if(!entry) return {};
+
+	return {
+		title: entry.name,
+		description: entry.description,
+	};
+};
 
 export const generateStaticParams = async () => {
   return registry.map((entry) => ({ slug: entry.slug }));
