@@ -8,7 +8,7 @@ const TRACK_BASE = [
 ].join(' ');
 
 const THUMB_BASE = [
-	'pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm',
+	'pointer-events-none inline-block h-4 w-4 rounded-full bg-brand-fg shadow-sm',
 	'transition-transform duration-200 ease-out',
 ].join(' ');
 

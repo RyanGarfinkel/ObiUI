@@ -4,6 +4,9 @@ export * from './themes';
 export { default as Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/Accordion/Accordion';
 export type { AccordionType, AccordionProps } from './components/Accordion/Accordion';
 
+export { default as Collapsible, CollapsibleTrigger, CollapsibleContent } from './components/Collapsible/Collapsible';
+export type { CollapsibleProps, CollapsibleTriggerProps, CollapsibleContentProps } from './components/Collapsible/Collapsible';
+
 export { Alert } from './components/Alert/Alert';
 export type { AlertVariant } from './components/Alert/Alert';
 
@@ -51,6 +54,9 @@ export type { InputProps } from './components/Input/Input';
 export { KanbanBoard, KanbanCard, KanbanColumn } from './components/Kanban/Kanban';
 export type { KanbanCardProps, KanbanColumnProps } from './components/Kanban/Kanban';
 
+export { default as Mosaic, MosaicTile } from './components/Mosaic/Mosaic';
+export type { MosaicTileLayout, MosaicTileSize, MosaicProps, MosaicTileProps } from './components/Mosaic/Mosaic';
+
 export { Progress } from './components/Progress/Progress';
 
 export { RadioGroup, RadioItem } from './components/Radio/Radio';
@@ -88,5 +94,3 @@ export type { ToggleGroupType, ToggleGroupSize } from './components/ToggleGroup/
 export { default as Tree, TreeItem } from './components/Tree/Tree';
 export type { TreeProps } from './components/Tree/Tree';
 
-export { default as Typography } from './components/Typography/Typography';
-export type { TypographyVariant, TypographyProps } from './components/Typography/Typography';

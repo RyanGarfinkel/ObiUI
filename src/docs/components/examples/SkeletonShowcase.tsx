@@ -7,7 +7,7 @@ import {
 	SkeletonInput,
 	SkeletonTableRow,
 } from '@/src/components/Skeleton/Skeleton';
-import { ExampleBlock } from '@/src/docs/components/ExampleBlock';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
 
 // ─── Individual examples ──────────────────────────────────────────────────────
 
@@ -142,9 +142,9 @@ export const SkeletonShowcase = () => {
 				<section key={ex.id} className='flex flex-col gap-1'>
 					<h3 className='text-sm font-semibold text-text font-mono'>{ex.title}</h3>
 					<p className='text-sm text-text-muted mb-3'>{ex.desc}</p>
-					<ExampleBlock label={ex.id} code={ex.code} minHeight='120px' align='start'>
+					<CodeBlock variant='example'label={ex.id} code={ex.code} minHeight='120px' align='start'>
 						{ex.preview}
-					</ExampleBlock>
+					</CodeBlock>
 				</section>
 			))}
 		</div>

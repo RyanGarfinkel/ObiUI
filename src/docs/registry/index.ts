@@ -71,14 +71,15 @@ export default function Example() {
     slug: 'input',
     name: 'Input',
     category: 'Inputs',
-    description: 'A single-line text input with optional label, hint, and error messaging.',
+    description: 'A single-line text input with optional label, hint, and error messaging. Supports a floating label variant where the label animates inside the field.',
     usage: `import Input from '@/src/components/Input/Input';
 
 export default function Example() {
   return (
     <div className="flex flex-col gap-4 max-w-sm">
       <Input label="Email" placeholder="you@example.com" hint="We will never share your email." />
-      <Input label="Username" placeholder="johndoe" error="This username is already taken." />
+      <Input label="Password" type="password" placeholder="••••••••" hint="At least 8 characters." />
+      <Input label="Floating label" variant="floating" />
       <Input label="Disabled" placeholder="Cannot edit" disabled />
     </div>
   );
@@ -88,13 +89,13 @@ export default function Example() {
         name: 'label',
         type: 'string',
         default: '—',
-        description: 'Visible label rendered above the input; also used to derive the input id.',
+        description: 'Visible label rendered above the input (default) or animated inside it (floating); also used to derive the input id.',
       },
       {
         name: 'placeholder',
         type: 'string',
         default: '—',
-        description: 'Placeholder text shown when the input is empty.',
+        description: 'Placeholder text shown when the input is empty (default variant only).',
       },
       {
         name: 'hint',
@@ -109,6 +110,12 @@ export default function Example() {
         description: 'Error message; switches the input to error state and sets aria-invalid.',
       },
       {
+        name: 'variant',
+        type: "'default' | 'floating'",
+        default: "'default'",
+        description: 'floating animates the label inside the input field, acting as a placeholder until the field is focused or has a value.',
+      },
+      {
         name: 'disabled',
         type: 'boolean',
         default: 'false',
@@ -118,6 +125,74 @@ export default function Example() {
     dependencies: [],
     registryDependencies: [],
     files: ['Input/Input.tsx'],
+  },
+  {
+    slug: 'otp-input',
+    name: 'OTPInput',
+    category: 'Inputs',
+    description: 'A one-time password input composed of individual single-character cells. Supports keyboard navigation, auto-advance, and paste.',
+    usage: `'use client';
+
+import { useState } from 'react';
+import OTPInput from '@/src/components/OTPInput/OTPInput';
+
+export default function Example() {
+  const [code, setCode] = useState('');
+
+  return (
+    <div className="flex flex-col gap-4">
+      <OTPInput label="Verification code" length={6} value={code} onChange={setCode} hint="Enter the 6-digit code from your email." />
+      <OTPInput label="Invalid code" length={6} value="123" onChange={() => {}} error="This code has expired." />
+    </div>
+  );
+}`,
+    props: [
+      {
+        name: 'length',
+        type: 'number',
+        default: '6',
+        description: 'Number of cells.',
+      },
+      {
+        name: 'value',
+        type: 'string',
+        default: "''",
+        description: 'Controlled value. Each character maps to a cell by index.',
+      },
+      {
+        name: 'onChange',
+        type: '(value: string) => void',
+        default: '—',
+        description: 'Called with the full updated string on any change.',
+      },
+      {
+        name: 'label',
+        type: 'string',
+        default: '—',
+        description: 'Visible label above the cells.',
+      },
+      {
+        name: 'error',
+        type: 'string',
+        default: '—',
+        description: 'Error message; all cells enter the error state.',
+      },
+      {
+        name: 'hint',
+        type: 'string',
+        default: '—',
+        description: 'Helper text shown below the cells.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Disables all cells.',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: [],
+    files: ['OTPInput/OTPInput.tsx'],
   },
   {
     slug: 'textarea',
@@ -372,7 +447,7 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Badge/Badge.tsx'],
+    files:                ['Badge/Badge.tsx'],
   },
   {
     slug: 'card',
@@ -474,7 +549,7 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Select/Select.tsx'],
+    files:                ['Select/Select.tsx'],
   },
   {
     slug: 'checkbox',
@@ -495,7 +570,7 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Checkbox/Checkbox.tsx'],
+    files:                ['Checkbox/Checkbox.tsx'],
   },
   {
     slug: 'table',
@@ -647,53 +722,6 @@ export default function Example() {
     files: ['Skeleton/Skeleton.tsx'],
   },
   {
-    slug: 'typography',
-    name: 'Typography',
-    category: 'Display',
-    description: 'A single component that renders the full typographic scale — headings, body text, code, blockquote, and muted variants — using semantic design tokens.',
-    usage: `import Typography from '@/src/components/Typography/Typography';
-
-export default function Example() {
-  return (
-    <div className="flex flex-col gap-3">
-      <Typography variant="h1">Heading 1</Typography>
-      <Typography variant="h2">Heading 2</Typography>
-      <Typography variant="h3">Heading 3</Typography>
-      <Typography variant="h4">Heading 4</Typography>
-      <Typography variant="lead">Lead paragraph text</Typography>
-      <Typography variant="p">Body paragraph with normal line height.</Typography>
-      <Typography variant="muted">Muted helper text</Typography>
-      <Typography variant="small">Small caption text</Typography>
-      <Typography variant="code">const x = 42;</Typography>
-      <Typography variant="blockquote">A quoted passage from a source.</Typography>
-    </div>
-  );
-}`,
-    props: [
-      {
-        name: 'variant',
-        type: '"h1" | "h2" | "h3" | "h4" | "p" | "lead" | "muted" | "small" | "code" | "blockquote"',
-        default: '—',
-        description: 'The typographic style to render.',
-      },
-      {
-        name: 'as',
-        type: 'ElementType',
-        default: 'derived from variant',
-        description: 'Override the rendered HTML element while keeping the variant styles.',
-      },
-      {
-        name: 'className',
-        type: 'string',
-        default: '""',
-        description: 'Additional classes merged onto the element.',
-      },
-    ],
-    dependencies: [],
-    registryDependencies: [],
-    files: ['Typography/Typography.tsx'],
-  },
-  {
     slug: 'form',
     name: 'Form',
     category: 'Forms',
@@ -764,7 +792,71 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Alert/Alert.tsx'],
+    files:                ['Alert/Alert.tsx'],
+  },
+  {
+    slug: 'collapsible',
+    name: 'Collapsible',
+    category: 'Disclosure',
+    description: 'A single-item show/hide component. Simpler than Accordion — use it for one expandable section like a filter panel, "show more" block, or settings group.',
+    usage: `'use client';
+
+import { useState } from 'react';
+import Collapsible, {
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from '@/components/ui/Collapsible/Collapsible';
+
+export default function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="w-full max-w-sm rounded-lg border border-surface-border px-4">
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <CollapsibleTrigger>Project details</CollapsibleTrigger>
+        <CollapsibleContent>
+          This project uses React 18, Tailwind v4, and Next.js 15. Components are
+          copied directly into your repo — no runtime dependency required.
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}`,
+    props: [
+      {
+        name: 'open',
+        type: 'boolean',
+        default: '—',
+        description: 'Controlled open state. When provided the component is controlled.',
+      },
+      {
+        name: 'defaultOpen',
+        type: 'boolean',
+        default: 'false',
+        description: 'Uncontrolled initial open state.',
+      },
+      {
+        name: 'onOpenChange',
+        type: '(open: boolean) => void',
+        default: '—',
+        description: 'Called when the open state changes. Receives the new boolean value.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Disables the trigger and prevents toggling.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '""',
+        description: 'Additional classes on the root div.',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: [],
+    files: ['Collapsible/Collapsible.tsx'],
   },
   {
     slug: 'accordion',
@@ -1115,6 +1207,148 @@ export default function Example() {
     files: ['Charts/Charts.tsx'],
   },
   {
+    slug: 'mosaic',
+    name: 'Mosaic',
+    category: 'Drag & Drop',
+    description: 'A drag-and-drop grid for metric tiles. Users reposition tiles by dragging and resize them by dragging edge handles. Tile content adapts to its current size via a render prop.',
+    usage: `'use client';
+
+import { useState } from 'react';
+import Mosaic, {
+  MosaicTile,
+  type MosaicTileLayout,
+} from '@/components/ui/Mosaic/Mosaic';
+
+const INITIAL_LAYOUT: MosaicTileLayout[] = [
+  { id: 'revenue', col: 1, row: 1, colSpan: 2, rowSpan: 1 },
+  { id: 'users',   col: 3, row: 1, colSpan: 1, rowSpan: 1 },
+  { id: 'chart',   col: 1, row: 2, colSpan: 3, rowSpan: 2 },
+  { id: 'growth',  col: 4, row: 1, colSpan: 1, rowSpan: 1 },
+];
+
+export default function Example() {
+  const [layout, setLayout] = useState<MosaicTileLayout[]>(INITIAL_LAYOUT);
+
+  return (
+    <Mosaic
+      layout={layout}
+      onLayoutChange={setLayout}
+      cols={4}
+      rowHeight={140}
+      gap={12}
+    >
+      <MosaicTile id="revenue" minColSpan={1} maxColSpan={3} minRowSpan={1} maxRowSpan={1}>
+        {({ colSpan }) => (
+          <div className="h-full flex flex-col justify-between">
+            <span className="text-xs text-text-muted">Revenue</span>
+            {colSpan === 1 ? (
+              <span className="text-2xl font-semibold text-text">$48.5k</span>
+            ) : (
+              <div className="flex items-end justify-between">
+                <span className="text-3xl font-semibold text-text">$48.5k</span>
+                <span className="text-xs text-brand font-medium">+12%</span>
+              </div>
+            )}
+          </div>
+        )}
+      </MosaicTile>
+
+      <MosaicTile id="users" minColSpan={1} maxColSpan={1} minRowSpan={1} maxRowSpan={1}>
+        <div className="h-full flex flex-col justify-between">
+          <span className="text-xs text-text-muted">Active users</span>
+          <span className="text-2xl font-semibold text-text">3,204</span>
+        </div>
+      </MosaicTile>
+
+      <MosaicTile id="chart" minColSpan={2} maxColSpan={4} minRowSpan={1} maxRowSpan={3}>
+        {({ rowSpan }) => (
+          <div className="h-full flex flex-col gap-2">
+            <span className="text-xs text-text-muted">Revenue over time</span>
+            <div className="flex-1 flex items-end gap-1">
+              {[40, 65, 50, 80, 60, 90, 75, 85].map((h, i) => (
+                <div key={i} className="flex-1 relative rounded-sm overflow-hidden bg-brand/10"
+                  style={{ height: rowSpan >= 2 ? '80%' : '60%' }}>
+                  <div className="absolute bottom-0 w-full bg-brand/70 rounded-sm"
+                    style={{ height: \`\${h}%\` }} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </MosaicTile>
+
+      <MosaicTile id="growth" minColSpan={1} maxColSpan={2} minRowSpan={1} maxRowSpan={2}>
+        {({ rowSpan }) => (
+          <div className="h-full flex flex-col justify-between">
+            <span className="text-xs text-text-muted">Growth</span>
+            <span className={\`font-semibold text-brand \${rowSpan >= 2 ? 'text-5xl' : 'text-3xl'}\`}>+24%</span>
+          </div>
+        )}
+      </MosaicTile>
+    </Mosaic>
+  );
+}`,
+    props: [
+      {
+        name: 'layout',
+        type: 'MosaicTileLayout[]',
+        default: '—',
+        description: 'Required. Array of tile layout entries. Each entry has id, col, row, colSpan, and rowSpan. col and row are 1-based grid positions.',
+      },
+      {
+        name: 'onLayoutChange',
+        type: '(layout: MosaicTileLayout[]) => void',
+        default: '—',
+        description: 'Required. Called when tiles are reordered or resized.',
+      },
+      {
+        name: 'cols',
+        type: 'number',
+        default: '12',
+        description: 'Number of grid columns.',
+      },
+      {
+        name: 'rowHeight',
+        type: 'number',
+        default: '160',
+        description: 'Base row height in pixels.',
+      },
+      {
+        name: 'gap',
+        type: 'number',
+        default: '16',
+        description: 'Gap between tiles in pixels.',
+      },
+      {
+        name: 'minColSpan',
+        type: 'number',
+        default: '2',
+        description: 'Minimum column span a tile can shrink to.',
+      },
+      {
+        name: 'minRowSpan',
+        type: 'number',
+        default: '1',
+        description: 'Minimum row span a tile can shrink to.',
+      },
+      {
+        name: 'maxColSpan',
+        type: 'number',
+        default: 'cols',
+        description: 'Maximum column span. Defaults to the full grid width.',
+      },
+      {
+        name: 'maxRowSpan',
+        type: 'number',
+        default: '4',
+        description: 'Maximum row span.',
+      },
+    ],
+    dependencies: ['@dnd-kit/core', '@dnd-kit/sortable', '@dnd-kit/utilities'],
+    registryDependencies: [],
+    files: ['Mosaic/Mosaic.tsx'],
+  },
+  {
     slug: 'kanban',
     name: 'KanbanBoard',
     category: 'Drag & Drop',
@@ -1176,7 +1410,7 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Progress/Progress.tsx'],
+    files:                ['Progress/Progress.tsx'],
   },
   {
     slug: 'spinner',
@@ -1195,7 +1429,7 @@ export default function Example() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Spinner/Spinner.tsx'],
+    files:                ['Spinner/Spinner.tsx'],
   },
   {
     slug:        'toast',
@@ -1240,7 +1474,7 @@ function MyComponent() {
     ],
     dependencies:         [],
     registryDependencies: [],
-    files:                ['src/components/Toast/Toast.tsx'],
+    files:                ['Toast/Toast.tsx'],
   },
   {
     slug: 'canvas',
@@ -1657,6 +1891,182 @@ export default function Example() {
     dependencies: [],
     registryDependencies: [],
     files: ['Carousel/Carousel.tsx'],
+  },
+  {
+    slug: 'slider',
+    name: 'Slider',
+    category: 'Inputs',
+    description: 'A styled range input for selecting a numeric value within a defined range, with optional label, hint, and current value display.',
+    usage: `'use client';
+
+import { useState } from 'react';
+import Slider from '@/src/components/Slider/Slider';
+
+export default function Example() {
+  const [volume, setVolume] = useState(40);
+
+  return (
+    <div className="flex flex-col gap-6 max-w-sm">
+      <Slider
+        label="Volume"
+        showValue
+        value={volume}
+        onValueChange={setVolume}
+        hint="Drag or use arrow keys to adjust."
+      />
+      <Slider label="Disabled" value={60} onValueChange={() => {}} disabled />
+    </div>
+  );
+}`,
+    props: [
+      {
+        name: 'value',
+        type: 'number',
+        default: '—',
+        description: 'Controlled current value.',
+      },
+      {
+        name: 'onValueChange',
+        type: '(value: number) => void',
+        default: '—',
+        description: 'Called with the new numeric value on change.',
+      },
+      {
+        name: 'min',
+        type: 'number',
+        default: '0',
+        description: 'Minimum value.',
+      },
+      {
+        name: 'max',
+        type: 'number',
+        default: '100',
+        description: 'Maximum value.',
+      },
+      {
+        name: 'step',
+        type: 'number',
+        default: '1',
+        description: 'Increment between selectable values.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Disables the slider.',
+      },
+      {
+        name: 'label',
+        type: 'string',
+        default: '—',
+        description: 'Visible label above the track; links to the input via id.',
+      },
+      {
+        name: 'hint',
+        type: 'string',
+        default: '—',
+        description: 'Helper text below the track.',
+      },
+      {
+        name: 'showValue',
+        type: 'boolean',
+        default: 'false',
+        description: 'Shows the current numeric value next to the label.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '""',
+        description: 'Additional classes merged onto the root wrapper.',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: [],
+    files: ['Slider/Slider.tsx'],
+  },
+  {
+    slug: 'code-block',
+    name: 'CodeBlock',
+    category: 'Display',
+    description: 'A styled code block with a copy button, and an optional tabbed Preview/Code switcher for live component examples.',
+    usage: `'use client';
+
+import { useState } from 'react';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
+
+const SNIPPET = \`import Button from '@/src/components/Button/Button';
+
+export default function Example() {
+  return <Button>Click me</Button>;
+}\`;
+
+export default function Example() {
+  return (
+    <div className="flex flex-col gap-6 max-w-2xl">
+      {/* Standalone code block */}
+      <CodeBlock code={SNIPPET} />
+
+      {/* Live example with Preview / Code tabs */}
+      <CodeBlock
+        variant="example"
+        code={SNIPPET}
+        label="button-example"
+        minHeight="160px"
+      >
+        <button className="px-4 py-2 rounded-md bg-brand text-brand-fg text-sm font-medium">
+          Click me
+        </button>
+      </CodeBlock>
+    </div>
+  );
+}`,
+    props: [
+      {
+        name: 'code',
+        type: 'string',
+        default: '—',
+        description: 'Required. The raw source code rendered in the code panel.',
+      },
+      {
+        name: 'variant',
+        type: '"code" | "example"',
+        default: '"code"',
+        description: '"code" renders the block alone. "example" adds a Preview/Code ToggleGroup above the panel.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Required when variant="example". Rendered in the Preview tab.',
+      },
+      {
+        name: 'label',
+        type: 'string',
+        default: '"example"',
+        description: 'Accessible label for the ToggleGroup tab strip (example variant only).',
+      },
+      {
+        name: 'minHeight',
+        type: 'string',
+        default: '"200px"',
+        description: 'CSS min-height on the preview pane (example variant only).',
+      },
+      {
+        name: 'align',
+        type: '"center" | "start"',
+        default: '"center"',
+        description: 'Flex alignment of content in the preview pane (example variant only).',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '""',
+        description: 'Additional Tailwind classes merged onto the root wrapper.',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: ['toggle-group'],
+    files: ['CodeBlock/CodeBlock.tsx'],
   },
 ];
 

@@ -35,6 +35,8 @@ export const DocsSidebar = () => {
 			<nav className='flex flex-col gap-1'>
 				<DocsSidebarLink href='/'>Home</DocsSidebarLink>
 				<DocsSidebarLink href='/installation'>Installation</DocsSidebarLink>
+				<DocsSidebarLink href='/themes'>Themes</DocsSidebarLink>
+				<DocsSidebarLink href='/typography'>Typography</DocsSidebarLink>
 				<DocsSidebarLink href='/components'>All Components</DocsSidebarLink>
 				<DocsSidebarLink href='/examples'>Examples</DocsSidebarLink>
 				<DocsSidebarLink href='/mcp'>MCP Server</DocsSidebarLink>

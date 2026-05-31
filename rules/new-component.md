@@ -85,6 +85,22 @@ Every registry entry must explicitly declare its dependencies. Omitting them bre
 
 If a component has zero npm dependencies and zero registry dependencies, still include the fields as empty arrays — this signals the entry is complete, not missing.
 
+## Live Preview (Required)
+
+Every component must have a live preview case in `src/docs/components/ComponentLivePreview.tsx`. Add a `case` for the component's slug in the switch statement. Without it, the component detail page shows "No preview available for this component" — this is not acceptable.
+
+The preview must match the `usage` field in the registry entry exactly. If the preview shows `<Input label="Email" />`, the `usage` string must also show `<Input label="Email" />`. They are always kept in sync.
+
+**Whenever you change the live preview, update the `usage` string in the registry to match — and vice versa.** Divergence between the two is a bug. The easiest way to check: search for the component's slug in `src/docs/registry/index.ts` and compare the `usage` field against the `case` block in `ComponentLivePreview.tsx` side by side.
+
+A component is not done until its preview case exists and renders correctly on the docs site.
+
+## Tests for Bugs Found
+
+Whenever a bug or unexpected behavior is noticed — whether caught in code review, manual testing, or reported by a user — write a failing test that reproduces it **before** fixing it. The test proves the bug existed, proves the fix works, and prevents regression.
+
+This applies to all components, not just new ones. If you fix a bug in an existing component that has no test for that case, add one.
+
 ## ComponentName.test.tsx
 
 Use Vitest and `@testing-library/react`. Tests must cover:

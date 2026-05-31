@@ -2,12 +2,14 @@
 
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots } from '@/src/components/Carousel/Carousel';
 import Accordion, { AccordionContent, AccordionItem, AccordionTrigger } from '@/src/components/Accordion/Accordion';
+import Collapsible, { CollapsibleTrigger, CollapsibleContent } from '@/src/components/Collapsible/Collapsible';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/src/components/Table/Table';
 import { CommandPalette, CommandGroup, CommandItem } from '@/src/components/CommandPalette/CommandPalette';
 import { Sidebar, SidebarSection, SidebarLink, SidebarDivider } from '@/src/components/Sidebar/Sidebar';
 import DataTable, { type ColumnDef, type PaginatorVariant } from '@/src/components/DataTable/DataTable';
 import { FormDescription, FormField, FormLabel, FormSection } from '@/src/components/Form/Form';
 import { AreaChart, BarChart, DonutChart, LineChart } from '@/src/components/Charts/Charts';
+import Mosaic, { MosaicTile, type MosaicTileLayout } from '@/src/components/Mosaic/Mosaic';
 import ToggleGroup, { ToggleGroupItem } from '@/src/components/ToggleGroup/ToggleGroup';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/components/Tabs/Tabs';
 import FunctionPlotter from '@/src/components/FunctionPlotter/FunctionPlotter';
@@ -17,7 +19,7 @@ import { Card, CardContent, CardHeader } from '@/src/components/Card/Card';
 import { ToastProvider, useToast } from '@/src/components/Toast/Toast';
 import { RadioGroup, RadioItem } from '@/src/components/Radio/Radio';
 import { DatePicker } from '@/src/components/DatePicker/DatePicker';
-import Typography from '@/src/components/Typography/Typography';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
 import Breadcrumb from '@/src/components/Breadcrumb/Breadcrumb';
 import { Combobox } from '@/src/components/Combobox/Combobox';
 import { Progress } from '@/src/components/Progress/Progress';
@@ -26,11 +28,13 @@ import { KanbanBoard } from '@/src/components/Kanban/Kanban';
 import Tree, { TreeItem } from '@/src/components/Tree/Tree';
 import { Spinner } from '@/src/components/Spinner/Spinner';
 import Textarea from '@/src/components/Textarea/Textarea';
+import OTPInput from '@/src/components/OTPInput/OTPInput';
 import { Select } from '@/src/components/Select/Select';
 import { Canvas } from '@/src/components/Canvas/Canvas';
 import { Alert } from '@/src/components/Alert/Alert';
 import { Badge } from '@/src/components/Badge/Badge';
 import Switch from '@/src/components/Switch/Switch';
+import Slider from '@/src/components/Slider/Slider';
 import Button from '@/src/components/Button/Button';
 import Input from '@/src/components/Input/Input';
 import { useState } from 'react';
@@ -40,7 +44,14 @@ interface ComponentLivePreviewProps {
 }
 
 export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
+  const [dashboardLayout, setDashboardLayout] = useState<MosaicTileLayout[]>([
+    { id: 'revenue', col: 1, row: 1, colSpan: 2, rowSpan: 1 },
+    { id: 'users',   col: 3, row: 1, colSpan: 1, rowSpan: 1 },
+    { id: 'chart',   col: 1, row: 2, colSpan: 3, rowSpan: 2 },
+    { id: 'growth',  col: 4, row: 1, colSpan: 1, rowSpan: 1 },
+  ]);
   const [switchChecked, setSwitchChecked] = useState(false);
+  const [sliderValue, setSliderValue]     = useState(40);
   const [radioValue, setRadioValue] = useState('option-1');
   const [toggleValue, setToggleValue] = useState<string | string[]>('left');
   const [tabValue, setTabValue] = useState('account');
@@ -63,11 +74,26 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
     case 'input':
       return (
         <div className='w-full max-w-sm flex flex-col gap-4'>
-          <Input label='Email address' placeholder='you@example.com' />
-          <Input label='Password' type='password' placeholder='••••••••' hint='Must be at least 8 characters.' />
-          <Input label='Username' defaultValue='ryan' error='That username is already taken.' />
+          <Input label='Email' placeholder='you@example.com' hint='We will never share your email.' />
+          <Input label='Password' type='password' placeholder='••••••••' hint='At least 8 characters.' />
+          <Input label='Floating label' variant='floating' />
+          <Input label='Disabled' placeholder='Cannot edit' disabled />
         </div>
       );
+
+    case 'otp-input': {
+      const OTPPreview = () =>
+      {
+        const [code, setCode] = useState('');
+        return (
+          <div className='flex flex-col gap-6'>
+            <OTPInput label='Verification code' length={6} value={code} onChange={setCode} hint='Enter the 6-digit code from your email.' />
+            <OTPInput label='Expired code' length={6} value='123' onChange={() => {}} error='This code has expired.' />
+          </div>
+        );
+      };
+      return <OTPPreview />;
+    }
 
     case 'textarea':
       return (
@@ -99,6 +125,20 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
         </div>
       );
 
+    case 'slider':
+      return (
+        <div className='w-full max-w-sm flex flex-col gap-6'>
+          <Slider
+            label='Volume'
+            showValue
+            value={sliderValue}
+            onValueChange={setSliderValue}
+            hint='Drag or use arrow keys to adjust.'
+          />
+          <Slider label='Disabled' value={60} onValueChange={() => {}} disabled />
+        </div>
+      );
+
     case 'toggle-group':
       return (
         <div className='flex flex-col gap-4 items-center'>
@@ -110,17 +150,29 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
         </div>
       );
 
+    case 'code-block': {
+      const snippet = 'import Button from \'@/src/components/Button/Button\';\n\nexport default function Example() {\n  return <Button>Click me</Button>;\n}';
+      return (
+        <div className='flex flex-col gap-6 w-full max-w-2xl'>
+          <CodeBlock code={snippet} />
+          <CodeBlock variant='example' code={snippet} label='button-example' minHeight='120px'>
+            <Button>Click me</Button>
+          </CodeBlock>
+        </div>
+      );
+    }
+
     case 'card':
       return (
         <div className='w-full max-w-sm'>
           <Card>
             <CardHeader>
-              <Typography variant='h3'>Project summary</Typography>
+              <h3 className='text-2xl font-semibold tracking-tight text-text'>Project summary</h3>
             </CardHeader>
             <CardContent>
-              <Typography variant='p'>
+              <p className='text-base text-text leading-7'>
                 Everything is on track for the Q3 launch. Three tasks remain open.
-              </Typography>
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -162,13 +214,17 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
 
     case 'typography':
       return (
-        <div className='w-full flex flex-col gap-2'>
-          <Typography variant='h1'>Heading 1</Typography>
-          <Typography variant='h2'>Heading 2</Typography>
-          <Typography variant='h3'>Heading 3</Typography>
-          <Typography variant='lead'>Lead paragraph text that introduces the section.</Typography>
-          <Typography variant='p'>Body paragraph with regular weight and line-height.</Typography>
-          <Typography variant='muted'>Muted helper text for supporting detail.</Typography>
+        <div className='w-full flex flex-col gap-3'>
+          <h1 className='text-4xl font-bold tracking-tight text-text'>Heading 1</h1>
+          <h2 className='text-3xl font-semibold tracking-tight text-text'>Heading 2</h2>
+          <h3 className='text-2xl font-semibold tracking-tight text-text'>Heading 3</h3>
+          <h4 className='text-xl font-semibold text-text'>Heading 4</h4>
+          <p className='text-xl text-text-muted leading-7'>Lead paragraph text that introduces the section.</p>
+          <p className='text-base text-text leading-7'>Body paragraph with regular weight and line-height.</p>
+          <p className='text-sm text-text-muted'>Muted helper text for supporting detail.</p>
+          <blockquote className='border-l-2 border-surface-border pl-4 italic text-text-muted'>A quoted passage from a source.</blockquote>
+          <p className='text-base text-text leading-7'>Inline <code className='text-sm font-mono bg-surface-active px-1.5 py-0.5 rounded text-text'>code snippet</code> example.</p>
+          <p className='text-xs text-text-muted'>Small caption text</p>
         </div>
       );
 
@@ -186,6 +242,19 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
               <Textarea placeholder='Tell us a bit about yourself.' rows={3} />
             </FormField>
           </FormSection>
+        </div>
+      );
+
+    case 'collapsible':
+      return (
+        <div className='w-full max-w-sm rounded-lg border border-surface-border px-4'>
+          <Collapsible>
+            <CollapsibleTrigger>Project details</CollapsibleTrigger>
+            <CollapsibleContent>
+              This project uses React 18, Tailwind v4, and Next.js 15. Components are
+              copied directly into your repo — no runtime dependency required.
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       );
 
@@ -225,13 +294,13 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
               <TabsTrigger value='notifications'>Notifications</TabsTrigger>
             </TabsList>
             <TabsContent value='account'>
-              <Typography variant='p'>Manage your account settings and preferences.</Typography>
+              <p className='text-base text-text leading-7'>Manage your account settings and preferences.</p>
             </TabsContent>
             <TabsContent value='security'>
-              <Typography variant='p'>Update your password and two-factor authentication settings.</Typography>
+              <p className='text-base text-text leading-7'>Update your password and two-factor authentication settings.</p>
             </TabsContent>
             <TabsContent value='notifications'>
-              <Typography variant='p'>Choose what notifications you receive and how.</Typography>
+              <p className='text-base text-text leading-7'>Choose what notifications you receive and how.</p>
             </TabsContent>
           </Tabs>
         </div>
@@ -345,6 +414,92 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
             ]}
           />
         </div>
+      );
+
+    case 'mosaic':
+      return (
+        <Mosaic
+          layout={dashboardLayout}
+          onLayoutChange={setDashboardLayout}
+          cols={4}
+          rowHeight={140}
+          gap={12}
+          className='w-full'
+        >
+          <MosaicTile id='revenue' minColSpan={1} maxColSpan={3} minRowSpan={1} maxRowSpan={1}>
+            {({ colSpan }) => (
+              <div className='h-full flex flex-col justify-between'>
+                <span className='text-xs text-text-muted'>Revenue</span>
+                {colSpan === 1 ? (
+                  <span className='text-2xl font-semibold text-text'>$48.5k</span>
+                ) : (
+                  <div className='flex items-end justify-between'>
+                    <span className='text-3xl font-semibold text-text'>$48.5k</span>
+                    <div className='flex flex-col items-end gap-1'>
+                      <span className='text-xs text-brand font-medium'>+12%</span>
+                      {colSpan >= 3 && (
+                        <span className='text-xs text-text-muted'>vs last month</span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </MosaicTile>
+
+          <MosaicTile id='users' minColSpan={1} maxColSpan={1} minRowSpan={1} maxRowSpan={1}>
+            <div className='h-full flex flex-col justify-between'>
+              <span className='text-xs text-text-muted'>Active users</span>
+              <span className='text-2xl font-semibold text-text'>3,204</span>
+            </div>
+          </MosaicTile>
+
+          <MosaicTile id='chart' minColSpan={2} maxColSpan={4} minRowSpan={1} maxRowSpan={3}>
+            {({ colSpan, rowSpan }) => (
+              <div className='h-full flex flex-col gap-2'>
+                <div className='flex items-center justify-between'>
+                  <span className='text-xs text-text-muted'>Revenue over time</span>
+                  {colSpan >= 3 && (
+                    <span className='text-xs text-text-subtle'>Last 8 months</span>
+                  )}
+                </div>
+                <div className='flex-1 flex items-end gap-1'>
+                  {[40, 65, 50, 80, 60, 90, 75, 85].map((h, i) => (
+                    <div key={i} className='flex-1 flex flex-col justify-end gap-0.5'>
+                      {rowSpan >= 2 && (
+                        <span className='text-[9px] text-text-subtle text-center tabular-nums'>{h}</span>
+                      )}
+                      <div className='relative rounded-sm overflow-hidden bg-brand/10' style={{ height: rowSpan >= 2 ? '80%' : '60%' }}>
+                        <div className='absolute bottom-0 w-full bg-brand/70 rounded-sm motion-safe:transition-all motion-safe:duration-300' style={{ height: `${h}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </MosaicTile>
+
+          <MosaicTile id='growth' minColSpan={1} maxColSpan={2} minRowSpan={1} maxRowSpan={2}>
+            {({ colSpan, rowSpan }) => (
+              <div className='h-full flex flex-col justify-between'>
+                <span className='text-xs text-text-muted'>Growth</span>
+                <div className='flex flex-col gap-1'>
+                  <span className={`font-semibold text-brand ${rowSpan >= 2 ? 'text-5xl' : 'text-3xl'}`}>+24%</span>
+                  {(rowSpan >= 2 || colSpan >= 2) && (
+                    <span className='text-xs text-text-muted'>Quarter over quarter</span>
+                  )}
+                  {rowSpan >= 2 && (
+                    <div className='mt-2 flex gap-2 text-xs text-text-muted'>
+                      <span>Q1 <span className='text-text font-medium'>+18%</span></span>
+                      <span>Q2 <span className='text-text font-medium'>+21%</span></span>
+                      <span>Q3 <span className='text-brand font-medium'>+24%</span></span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </MosaicTile>
+        </Mosaic>
       );
 
     case 'kanban': {

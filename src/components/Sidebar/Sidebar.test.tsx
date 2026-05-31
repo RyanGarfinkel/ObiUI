@@ -84,7 +84,6 @@ describe('SidebarLink', () =>
 	{
 		render(<SidebarLink href='/home' isActive>Home</SidebarLink>);
 		const link = screen.getByRole('link', { name: 'Home' });
-		expect(link.className).toContain('bg-surface-active');
 		expect(link.className).toContain('text-text');
 		expect(link.className).toContain('font-medium');
 	});

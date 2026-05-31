@@ -1,9 +1,9 @@
-'use client';;
+'use client';
+
 import { FormDescription, FormField, FormLabel } from '@/src/components/Form/Form';
 import { Timeline, TimelineItem } from '@/src/components/Timeline/Timeline';
 import { Card, CardContent, CardHeader } from '@/src/components/Card/Card';
-import { ExampleBlock } from '@/src/docs/components/ExampleBlock';
-import Typography from '@/src/components/Typography/Typography';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
 import { AreaChart } from '@/src/components/Charts/Charts';
 import Button from '@/src/components/Button/Button';
 import Input from '@/src/components/Input/Input';
@@ -18,7 +18,6 @@ import Button from '@/src/components/Button/Button';
 import { Card, CardContent, CardHeader } from '@/src/components/Card/Card';
 import { FormField, FormLabel, FormDescription } from '@/src/components/Form/Form';
 import Input from '@/src/components/Input/Input';
-import Typography from '@/src/components/Typography/Typography';
 
 export default function LoginForm() {
   const [email,    setEmail]    = useState('');
@@ -27,10 +26,10 @@ export default function LoginForm() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <Typography variant="h3">Sign in</Typography>
-        <Typography variant="muted">
+        <h3 className="text-2xl font-semibold tracking-tight text-text">Sign in</h3>
+        <p className="text-sm text-text-muted">
           Enter your email and password to continue.
-        </Typography>
+        </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
@@ -75,8 +74,8 @@ const LoginPreview = () => {
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>
-        <Typography variant='h3'>Sign in</Typography>
-        <Typography variant='muted'>Enter your email and password to continue.</Typography>
+        <h3 className='text-2xl font-semibold tracking-tight text-text'>Sign in</h3>
+        <p className='text-sm text-text-muted'>Enter your email and password to continue.</p>
       </CardHeader>
       <CardContent>
         <form onSubmit={(e) => e.preventDefault()} className='flex flex-col gap-4'>
@@ -116,7 +115,6 @@ const LoginPreview = () => {
 
 const DASHBOARD_CODE = `import { AreaChart } from '@/src/components/Charts/Charts';
 import { Card, CardContent, CardHeader } from '@/src/components/Card/Card';
-import Typography from '@/src/components/Typography/Typography';
 
 const data  = [
   { month: 'Jan', revenue: 12400, users: 3200 },
@@ -152,8 +150,8 @@ export default function Dashboard() {
       </div>
       <Card>
         <CardHeader>
-          <Typography variant="h3">Revenue &amp; users</Typography>
-          <Typography variant="muted">6-month trend</Typography>
+          <h3 className="text-2xl font-semibold tracking-tight text-text">Revenue &amp; users</h3>
+          <p className="text-sm text-text-muted">6-month trend</p>
         </CardHeader>
         <CardContent>
           <AreaChart
@@ -205,8 +203,8 @@ const DashboardPreview = () => {
       </div>
       <Card>
         <CardHeader>
-          <Typography variant='h3'>Revenue &amp; users</Typography>
-          <Typography variant='muted'>6-month trend</Typography>
+          <h3 className='text-2xl font-semibold tracking-tight text-text'>Revenue &amp; users</h3>
+          <p className='text-sm text-text-muted'>6-month trend</p>
         </CardHeader>
         <CardContent>
           <AreaChart
@@ -390,9 +388,9 @@ const ExamplesPage = () => {
         <p className='text-sm text-text-muted'>
           A card-wrapped sign-in form using Input, Button, and Form primitives.
         </p>
-        <ExampleBlock label='login' code={LOGIN_CODE} minHeight='320px'>
+        <CodeBlock variant='example'label='login' code={LOGIN_CODE} minHeight='320px'>
           <LoginPreview />
-        </ExampleBlock>
+        </CodeBlock>
       </section>
 
       <section className='flex flex-col gap-2'>
@@ -400,9 +398,9 @@ const ExamplesPage = () => {
         <p className='text-sm text-text-muted'>
           Stat cards and an area chart for a typical analytics overview.
         </p>
-        <ExampleBlock label='dashboard' code={DASHBOARD_CODE} minHeight='320px'>
+        <CodeBlock variant='example'label='dashboard' code={DASHBOARD_CODE} minHeight='320px'>
           <DashboardPreview />
-        </ExampleBlock>
+        </CodeBlock>
       </section>
 
       <section className='flex flex-col gap-2'>
@@ -410,9 +408,9 @@ const ExamplesPage = () => {
         <p className='text-sm text-text-muted'>
           An interactive Timeline that grows one step at a time, with a slide-in and dot-pop animation on each new entry.
         </p>
-        <ExampleBlock label='deploy' code={DEPLOY_CODE} minHeight='320px'>
+        <CodeBlock variant='example'label='deploy' code={DEPLOY_CODE} minHeight='320px'>
           <DeployPreview />
-        </ExampleBlock>
+        </CodeBlock>
       </section>
     </div>
   );

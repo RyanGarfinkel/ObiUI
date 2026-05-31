@@ -1,6 +1,7 @@
-'use client';;
+'use client';
+import { ToggleGroup, ToggleGroupItem } from '@/src/components/ToggleGroup/ToggleGroup';
 import { Timeline, TimelineItem } from '@/src/components/Timeline/Timeline';
-import { CodeBlock } from '@/src/docs/components/CodeBlock';
+import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
 import { useState } from 'react';
 
 type PM = 'npm' | 'yarn' | 'pnpm' | 'bun';
@@ -25,34 +26,6 @@ const pmCommand = (pm: PM, command: 'install' | 'add' | 'dlx', pkg: string) => {
   if (pm === 'yarn') return `yarn add ${pkg}`;
   if (pm === 'pnpm') return `pnpm add ${pkg}`;
   return `bun add ${pkg}`;
-};
-
-const PmToggle = ({ active, onChange }: { active: PM; onChange: (pm: PM) => void }) => {
-  return (
-    <div
-      role='tablist'
-      aria-label='Package manager'
-      className='inline-flex items-center gap-0.5 rounded-lg border border-surface-border bg-surface-hover p-1'
-    >
-      {TABS.map((pm) => (
-        <button
-          key={pm}
-          type='button'
-          role='tab'
-          aria-selected={active === pm}
-          onClick={() => onChange(pm)}
-          className={[
-            'px-3 py-1 rounded-md text-xs font-medium transition-colors duration-[var(--duration-fast)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-brand-ring',
-            active === pm
-              ? 'bg-surface text-text shadow-sm'
-              : 'text-text-muted hover:text-text',
-          ].join(' ')}
-        >
-          {pm}
-        </button>
-      ))}
-    </div>
-  );
 };
 
 const InlineCode = ({ children }: { children: string }) => {
@@ -81,7 +54,18 @@ const InstallationPage = () => {
       {/* Package manager toggle — shared across all steps */}
       <div className='flex flex-col gap-2'>
         <p className='text-sm text-text-muted'>Choose your package manager</p>
-        <PmToggle active={pm} onChange={setPm} />
+        <ToggleGroup
+          type='single'
+          value={pm}
+          onValueChange={(v) => setPm(v as PM)}
+          size='sm'
+          aria-label='Package manager'
+          className='self-start'
+        >
+          {TABS.map((tab) => (
+            <ToggleGroupItem key={tab} value={tab}>{tab}</ToggleGroupItem>
+          ))}
+        </ToggleGroup>
       </div>
 
       {/* Steps */}

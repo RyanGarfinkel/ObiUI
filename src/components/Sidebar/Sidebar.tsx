@@ -1,6 +1,7 @@
 'use client';
 
 import { HTMLAttributes, KeyboardEvent, ReactNode, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Link, { LinkProps } from 'next/link';
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -14,7 +15,10 @@ export interface SidebarProps extends HTMLAttributes<HTMLElement>
 export const Sidebar = (
     { width = 'w-56', height = 'h-full', className = '', children, onKeyDown, ...props }: SidebarProps
 ) => {
-    const sidebarRef = useRef<HTMLElement>(null);
+    const sidebarRef   = useRef<HTMLElement>(null);
+    const indicatorRef = useRef<HTMLDivElement>(null);
+    const initialized  = useRef(false);
+    const pathname     = usePathname();
 
     useEffect(() =>
     {
@@ -25,6 +29,31 @@ export const Sidebar = (
         const rover = links.find(l => l.getAttribute('aria-current') === 'page') ?? links[0];
         links.forEach(l => { l.tabIndex = l === rover ? 0 : -1; });
     }, []);
+
+    useEffect(() =>
+    {
+        const sidebar   = sidebarRef.current;
+        const indicator = indicatorRef.current;
+        if(!sidebar || !indicator) return;
+
+        const active = sidebar.querySelector<HTMLElement>('[aria-current="page"]');
+        if(!active) return;
+
+        if(!initialized.current)
+        {
+            indicator.style.transition = 'none';
+            indicator.style.top        = `${active.offsetTop}px`;
+            indicator.style.height     = `${active.offsetHeight}px`;
+            indicator.getBoundingClientRect();
+            indicator.style.transition = '';
+            initialized.current        = true;
+        }
+        else
+        {
+            indicator.style.top    = `${active.offsetTop}px`;
+            indicator.style.height = `${active.offsetHeight}px`;
+        }
+    }, [pathname]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLElement>) =>
     {
@@ -58,11 +87,18 @@ export const Sidebar = (
             onKeyDown={handleKeyDown}
             className={['overflow-y-auto scrollbar-thin border-r border-surface-border bg-surface', height, width, className].join(' ')}
         >
-			<div className='px-3 py-6 flex flex-col gap-6'>
-				{children}
-			</div>
-		</aside>
-	);
+            <div className='relative px-3 py-6 flex flex-col gap-6'>
+                <div
+                    ref={indicatorRef}
+                    aria-hidden='true'
+                    className='absolute inset-x-3 rounded-md bg-surface-active pointer-events-none motion-safe:transition-[top,height] motion-safe:duration-200 motion-safe:ease-[var(--ease-standard)]'
+                >
+                    <span className='absolute left-0 top-1 bottom-1 w-0.5 rounded-full bg-brand' />
+                </div>
+                {children}
+            </div>
+        </aside>
+    );
 };
 
 // ─── SidebarSection ───────────────────────────────────────────────────────────
@@ -100,21 +136,15 @@ export const SidebarLink = ({ isActive = false, className = '', children, ...pro
 			{...props}
 			aria-current={isActive ? 'page' : undefined}
 			className={[
-				'relative flex items-center rounded-md px-3 py-1.5 text-sm',
+				'relative z-10 flex items-center rounded-md px-3 py-1.5 text-sm',
 				'motion-safe:transition-colors motion-safe:duration-[var(--duration-fast)]',
 				'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring',
 				isActive
-					? 'bg-surface-active text-text font-medium'
+					? 'text-text font-medium'
 					: 'text-text-muted hover:bg-surface-hover hover:text-text',
 				className,
 			].join(' ')}
 		>
-			{isActive && (
-				<span
-					className='absolute left-0 top-1 bottom-1 w-0.5 rounded-full bg-brand'
-					aria-hidden='true'
-				/>
-			)}
 			{children}
 		</Link>
 	);

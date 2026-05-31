@@ -62,3 +62,11 @@ Any component that opens a floating layer (Modal, Dialog, Drawer, Dropdown, Menu
 | Animation | Fade + scale 0.95→1.0 in, reverse out | Same |
 
 Return focus to the trigger element on close — always, regardless of how it was closed.
+
+---
+
+## Memory & Design Learning
+
+**Aggressive note-taking.** Capture new patterns, preferences, and decisions as they emerge — don't wait to be asked. When a new design convention is validated, a visual approach is confirmed, or a pattern is ruled out, save it to memory immediately.
+
+**Evolving design philosophy.** The files in `src/patterns/` and `rules/` are living documents. When new visual or interaction principles emerge from working sessions, update them. Design thinking in this project should be current, not frozen.

@@ -30,6 +30,8 @@ export interface ToggleGroupProps
 	disabled?: boolean;
 	className?: string;
 	children: React.ReactNode;
+	'aria-label'?: string;
+	'aria-labelledby'?: string;
 }
 
 export interface ToggleGroupItemProps extends ButtonHTMLAttributes<HTMLButtonElement>
@@ -46,7 +48,7 @@ const sizeClasses: Record<ToggleGroupSize, string> = {
 	lg: 'h-11 px-5 text-base',
 };
 
-const ITEM_BASE = 'relative z-10 inline-flex items-center justify-center font-medium tracking-tight transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring disabled:pointer-events-none disabled:opacity-40';
+const ITEM_BASE = 'relative z-10 inline-flex items-center justify-center font-medium tracking-tight transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-ring disabled:pointer-events-none disabled:opacity-40';
 
 export const ToggleGroupItem = (
     {
@@ -114,6 +116,8 @@ export const ToggleGroup = (
         disabled = false,
         className = '',
         children,
+        'aria-label': ariaLabel,
+        'aria-labelledby': ariaLabelledBy,
     }: ToggleGroupProps
 ) => {
 	const groupRef     = useRef<HTMLDivElement>(null);
@@ -151,6 +155,8 @@ export const ToggleGroup = (
 			<div
 				role='group'
 				ref={groupRef}
+				aria-label={ariaLabel}
+				aria-labelledby={ariaLabelledBy}
 				className={`relative inline-flex items-center rounded-md border border-surface-border bg-surface overflow-hidden ${className}`}
 			>
 				{type === 'single' && (

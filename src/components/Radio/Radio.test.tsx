@@ -129,4 +129,79 @@ describe('RadioGroup / RadioItem', () =>
 		const circle = label?.querySelector('.rounded-full.border-2');
 		expect(circle?.className).toContain('border-surface-border');
 	});
+
+	it('ArrowDown moves focus to next item without selecting', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('a', onValueChange);
+
+		const inputA = screen.getByLabelText('Option A') as HTMLInputElement;
+		inputA.focus();
+		fireEvent.keyDown(inputA, { key: 'ArrowDown' });
+
+		expect(document.activeElement).toBe(screen.getByLabelText('Option B', { exact: false }));
+		expect(onValueChange).not.toHaveBeenCalled();
+	});
+
+	it('ArrowUp moves focus to previous item without selecting', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('b', onValueChange);
+
+		const inputB = screen.getByLabelText('Option B', { exact: false }) as HTMLInputElement;
+		inputB.focus();
+		fireEvent.keyDown(inputB, { key: 'ArrowUp' });
+
+		expect(document.activeElement).toBe(screen.getByLabelText('Option A'));
+		expect(onValueChange).not.toHaveBeenCalled();
+	});
+
+	it('ArrowDown wraps from last non-disabled item to first', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('a', onValueChange);
+
+		const inputB = screen.getByLabelText('Option B', { exact: false }) as HTMLInputElement;
+		inputB.focus();
+		fireEvent.keyDown(inputB, { key: 'ArrowDown' });
+
+		expect(document.activeElement).toBe(screen.getByLabelText('Option A'));
+		expect(onValueChange).not.toHaveBeenCalled();
+	});
+
+	it('Space selects the focused item', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('a', onValueChange);
+
+		const inputB = screen.getByLabelText('Option B', { exact: false }) as HTMLInputElement;
+		inputB.focus();
+		fireEvent.keyDown(inputB, { key: ' ' });
+
+		expect(onValueChange).toHaveBeenCalledWith('b');
+	});
+
+	it('Enter selects the focused item', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('a', onValueChange);
+
+		const inputB = screen.getByLabelText('Option B', { exact: false }) as HTMLInputElement;
+		inputB.focus();
+		fireEvent.keyDown(inputB, { key: 'Enter' });
+
+		expect(onValueChange).toHaveBeenCalledWith('b');
+	});
+
+	it('ArrowDown skips disabled items', () =>
+	{
+		const onValueChange = vi.fn();
+		renderGroup('a', onValueChange);
+
+		const inputA = screen.getByLabelText('Option A') as HTMLInputElement;
+		inputA.focus();
+		fireEvent.keyDown(inputA, { key: 'ArrowDown' });
+
+		expect(document.activeElement).toBe(screen.getByLabelText('Option B', { exact: false }));
+	});
 });

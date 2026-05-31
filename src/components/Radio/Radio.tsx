@@ -1,5 +1,6 @@
-'use client';;
-import { createContext, useContext } from 'react';
+'use client';
+
+import { createContext, useContext, type KeyboardEvent, type ReactNode } from 'react';
 
 interface RadioContextValue
 {
@@ -22,7 +23,7 @@ export interface RadioGroupProps
 	onValueChange: (v: string) => void;
 	name: string;
 	className?: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 export const RadioGroup = ({ value, onValueChange, name, className = '', children }: RadioGroupProps) => {
@@ -49,9 +50,26 @@ export const RadioItem = ({ value, label, hint, disabled = false, className = ''
 	const checked = ctx.value === value;
 	const id = `${ctx.name}-${value}`;
 
-	const handleChange = () =>
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) =>
 	{
-		if(!disabled) ctx.onValueChange(value);
+		if(e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'ArrowLeft')
+		{
+			e.preventDefault();
+			const radios = Array.from(
+				document.querySelectorAll<HTMLInputElement>(`input[name="${ctx.name}"]`)
+			).filter(r => !r.disabled);
+			const idx = radios.indexOf(e.currentTarget);
+			if(idx === -1) return;
+			const isForward = e.key === 'ArrowDown' || e.key === 'ArrowRight';
+			const next = radios[(idx + (isForward ? 1 : -1) + radios.length) % radios.length];
+			next.focus();
+		}
+
+		if(e.key === ' ' || e.key === 'Enter')
+		{
+			e.preventDefault();
+			if(!disabled) ctx.onValueChange(value);
+		}
 	};
 
 	return (
@@ -71,7 +89,9 @@ export const RadioItem = ({ value, label, hint, disabled = false, className = ''
 					value={value}
 					checked={checked}
 					disabled={disabled}
-					onChange={handleChange}
+					readOnly
+					onClick={() => { if(!disabled) ctx.onValueChange(value); }}
+					onKeyDown={handleKeyDown}
 					aria-checked={checked}
 					className='peer sr-only'
 				/>

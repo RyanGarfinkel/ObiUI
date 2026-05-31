@@ -1,0 +1,62 @@
+# Slider
+
+A styled range input for selecting a numeric value within a defined range. Built on the native `<input type="range">` for full keyboard and accessibility support.
+
+## Props
+
+| Prop            | Type                         | Default | Description                                            |
+|-----------------|------------------------------|---------|--------------------------------------------------------|
+| value           | number                       | —       | Controlled current value.                              |
+| onValueChange   | (value: number) => void      | —       | Called with the new numeric value on change.           |
+| min             | number                       | 0       | Minimum value.                                         |
+| max             | number                       | 100     | Maximum value.                                         |
+| step            | number                       | 1       | Increment between selectable values.                   |
+| disabled        | boolean                      | false   | Disables the slider.                                   |
+| label           | string                       | —       | Visible label above the track; links to input via id.  |
+| hint            | string                       | —       | Helper text below the track.                           |
+| showValue       | boolean                      | false   | Shows the current numeric value next to the label.     |
+| className       | string                       | ""      | Additional classes merged onto the root wrapper.       |
+
+## Interactive States
+
+- **hover**: Native browser thumb hover; `accent-color` token applied to match brand styling.
+- **focus**: `outline-none` — suppresses the browser default outline on the input.
+- **focus-visible**: `ring-2 ring-offset-2 ring-brand-ring` — visible keyboard focus ring on the input element.
+- **disabled**: `opacity-40 pointer-events-none cursor-not-allowed` — muted appearance, no interaction.
+
+## Visual Structure
+
+- **Track**: A relative container `h-1.5 rounded-full bg-surface-active`. An absolutely-positioned inner `div` (`bg-brand`) expands from left to the current percentage to show the filled portion.
+- **Thumb**: Styled via `accent-color: var(--color-brand)` inline on the native input, so it picks up the brand token. The input sits full-width over the track for hit testing.
+- **Label row**: Flexbox row with the label on the left and the current value (when `showValue` is true) on the right.
+- **Hint**: `text-sm text-text-muted` below the track; associated to the input via `aria-describedby`.
+
+## Accessibility
+
+- Uses native `<input type="range">` — keyboard-navigable by default (arrow keys, Home/End, Page Up/Down).
+- `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` are set explicitly.
+- `label` and `input` are linked via `htmlFor`/`id`.
+- `hint` is linked via `aria-describedby`.
+- Focus-visible ring is always present for keyboard users.
+- Animations respect `prefers-reduced-motion` via `motion-safe:` variant.
+
+## When to Use
+
+Use Slider when the user needs to select a value along a continuous or stepped range — volume, brightness, zoom level, price range. Prefer a numeric Input when the user needs to type an exact value.
+
+## Tokens Used
+
+- `bg-brand` — filled portion of the track and thumb accent color
+- `bg-surface-active` — empty track background
+- `text-text` — label color
+- `text-text-muted` — hint and value display color
+- `ring-brand-ring` — focus-visible ring
+- `--duration-fast` — filled track transition duration
+
+## Installation
+
+```
+npx @obi/ui add slider
+```
+
+No npm dependencies. No registry dependencies.
