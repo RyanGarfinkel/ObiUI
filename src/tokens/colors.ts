@@ -1,93 +1,110 @@
-/**
- * Design tokens — source of truth for the MCP server.
- * These mirror the CSS custom properties defined in globals.css @theme.
- * Components use Tailwind utilities derived from those variables (e.g. bg-brand),
- * not these values directly.
- */
-export const colors = {
-	brand: {
+// AUTO-GENERATED — edit tokens/zinc.{light,dark}.json then run `npm run tokens`
+export const colors =
+{
+	brand:
+	{
 		default: '#18181b',
-		hover:   '#3f3f46',
-		active:  '#52525b',
+		hover:   '#27272a',
+		active:  '#3f3f46',
 		ring:    '#18181b',
 		fg:      '#ffffff',
-		dark: {
-			default: '#fafafa',
-			hover:   '#f4f4f5',
-			active:  '#e4e4e7',
-			ring:    '#fafafa',
-			fg:      '#18181b',
+		dark:
+		{
+			default: '#e8e8ea',
+			hover:   '#d0d0d4',
+			active:  '#b4b4b9',
+			ring:    '#e8e8ea',
+			fg:      '#111113',
 		},
 	},
-	danger: {
+	danger:
+	{
 		default: '#dc2626',
 		hover:   '#b91c1c',
 		active:  '#991b1b',
 		ring:    '#dc2626',
-		dark: {
-			default: '#ef4444',
-			hover:   '#f87171',
-			active:  '#fca5a5',
+		dark:
+		{
+			default: '#f87171',
+			hover:   '#fca5a5',
+			active:  '#fecaca',
+			ring:    '#f87171',
 		},
 	},
-	success: {
+	success:
+	{
 		default: '#16a34a',
 		bg:      '#f0fdf4',
 		border:  '#bbf7d0',
-		dark: {
+		dark:
+		{
 			default: '#4ade80',
 			bg:      '#052e16',
 			border:  '#166534',
 		},
 	},
-	warning: {
+	warning:
+	{
 		default: '#d97706',
 		bg:      '#fffbeb',
 		border:  '#fde68a',
-		dark: {
+		dark:
+		{
 			default: '#fbbf24',
 			bg:      '#1c1200',
 			border:  '#92400e',
 		},
 	},
-	surface: {
-		default:      '#ffffff',
-		hover:        '#f9fafb',
-		active:       '#f4f4f5',
-		border:       '#e4e4e7',
-		borderHover:  '#d4d4d8',
-		dark: {
-			default:     '#27272a',
-			hover:       '#3f3f46',
-			active:      '#52525b',
-			border:      '#3f3f46',
-			borderHover: '#52525b',
+	surface:
+	{
+		default:     '#ffffff',
+		hover:       '#f9fafb',
+		active:      '#f4f4f5',
+		border:      '#e4e4e7',
+		borderHover: '#d4d4d8',
+		dark:
+		{
+			default:     '#111113',
+			hover:       '#1c1c1f',
+			active:      '#26262a',
+			border:      '#2e2e32',
+			borderHover: '#3e3e43',
 		},
 	},
-	text: {
+	text:
+	{
 		default:  '#18181b',
-		muted:    '#71717a',
+		muted:    '#52525b',
 		subtle:   '#a1a1aa',
 		inverted: '#ffffff',
-		dark: {
-			default: '#f4f4f5',
-			muted:   '#a1a1aa',
-			subtle:  '#71717a',
+		dark:
+		{
+			default:  '#e8e8ea',
+			muted:    '#8e8e9a',
+			subtle:   '#54545e',
+			inverted: '#111113',
 		},
 	},
-	input: {
-		border:           '#d4d4d8',
-		borderHover:      '#a1a1aa',
-		ring:             '#18181b',
-		placeholder:      '#a1a1aa',
-		disabledBg:       '#f4f4f5',
-		disabledText:     '#a1a1aa',
-		error:            '#dc2626',
-		errorRing:        '#dc2626',
-		dark: {
-			border:      '#3f3f46',
-			borderHover: '#52525b',
-			disabledBg:  '#27272a',
+	input:
+	{
+		border:       '#d4d4d8',
+		borderHover:  '#a1a1aa',
+		ring:         '#18181b',
+		placeholder:  '#a1a1aa',
+		disabledBg:   '#f4f4f5',
+		disabledText: '#a1a1aa',
+		error:        '#dc2626',
+		errorRing:    '#dc2626',
+		dark:
+		{
+			border:       '#2e2e32',
+			borderHover:  '#3e3e43',
+			ring:         '#e8e8ea',
+			placeholder:  '#54545e',
+			disabledBg:   '#1c1c1f',
+			disabledText: '#2e2e32',
+			error:        '#f87171',
+			errorRing:    '#f87171',
 		},
 	},
 } as const;
