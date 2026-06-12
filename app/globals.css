@@ -6,25 +6,25 @@
 
 @theme {
 	/* Motion */
-	--duration-fast:   150ms;
-	--duration-base:   200ms;
-	--duration-slow:   300ms;
-	--ease-standard:   cubic-bezier(0.2, 0, 0, 1);
-	--ease-enter:      cubic-bezier(0, 0, 0.2, 1);
-	--ease-exit:       cubic-bezier(0.4, 0, 1, 1);
+	--duration-fast:    150ms;
+	--duration-base:    200ms;
+	--duration-slow:    300ms;
+	--ease-standard:    cubic-bezier(0.2, 0, 0, 1);
+	--ease-enter:       cubic-bezier(0, 0, 0.2, 1);
+	--ease-exit:        cubic-bezier(0.4, 0, 1, 1);
 
 	/* Brand (primary action) */
-	--color-brand:          #18181b;
-	--color-brand-hover:    #3f3f46;
-	--color-brand-active:   #52525b;
-	--color-brand-ring:     #18181b;
-	--color-brand-fg:       #ffffff;
+	--color-brand:        #18181b;
+	--color-brand-hover:  #27272a;
+	--color-brand-active: #3f3f46;
+	--color-brand-ring:   #18181b;
+	--color-brand-fg:     #ffffff;
 
 	/* Danger (destructive action) */
-	--color-danger:         #dc2626;
-	--color-danger-hover:   #b91c1c;
-	--color-danger-active:  #991b1b;
-	--color-danger-ring:    #dc2626;
+	--color-danger:        #dc2626;
+	--color-danger-hover:  #b91c1c;
+	--color-danger-active: #991b1b;
+	--color-danger-ring:   #dc2626;
 
 	/* Success */
 	--color-success:        #16a34a;
@@ -44,57 +44,57 @@
 	--color-surface-border-hover: #d4d4d8;
 
 	/* Text */
-	--color-text:           #18181b;
-	--color-text-muted:     #71717a;
-	--color-text-subtle:    #a1a1aa;
-	--color-text-inverted:  #ffffff;
+	--color-text:          #18181b;
+	--color-text-muted:    #52525b;
+	--color-text-subtle:   #a1a1aa;
+	--color-text-inverted: #ffffff;
 
 	/* Input */
-	--color-input-border:         #d4d4d8;
-	--color-input-border-hover:   #a1a1aa;
-	--color-input-ring:           #18181b;
-	--color-input-placeholder:    #a1a1aa;
-	--color-input-disabled-bg:    #f4f4f5;
-	--color-input-disabled-text:  #a1a1aa;
-	--color-input-error:          #dc2626;
-	--color-input-error-ring:     #dc2626;
+	--color-input-border:        #d4d4d8;
+	--color-input-border-hover:  #a1a1aa;
+	--color-input-ring:          #18181b;
+	--color-input-placeholder:   #a1a1aa;
+	--color-input-disabled-bg:   #f4f4f5;
+	--color-input-disabled-text: #a1a1aa;
+	--color-input-error:         #dc2626;
+	--color-input-error-ring:    #dc2626;
 }
 
 /* ─── Dark mode overrides ────────────────────────────── */
 
 .dark {
-	--color-brand:          #fafafa;
-	--color-brand-hover:    #f4f4f5;
-	--color-brand-active:   #e4e4e7;
-	--color-brand-ring:     #fafafa;
-	--color-brand-fg:       #18181b;
-
-	--color-danger:         #ef4444;
-	--color-danger-hover:   #f87171;
-	--color-danger-active:  #fca5a5;
-
-	--color-success:        #4ade80;
-	--color-success-bg:     #052e16;
-	--color-success-border: #166534;
-
-	--color-warning:        #fbbf24;
-	--color-warning-bg:     #1c1200;
-	--color-warning-border: #92400e;
-
-	--color-surface:              #27272a;
-	--color-surface-hover:        #3f3f46;
-	--color-surface-active:       #52525b;
-	--color-surface-border:       #3f3f46;
-	--color-surface-border-hover: #52525b;
-
-	--color-text:           #f4f4f5;
-	--color-text-muted:     #a1a1aa;
-	--color-text-subtle:    #71717a;
-
-	--color-input-border:        #3f3f46;
-	--color-input-border-hover:  #52525b;
-	--color-input-ring:          #fafafa;
-	--color-input-disabled-bg:   #27272a;
+	--color-brand:                #e8e8ea;
+	--color-brand-hover:          #d0d0d4;
+	--color-brand-active:         #b4b4b9;
+	--color-brand-ring:           #e8e8ea;
+	--color-brand-fg:             #111113;
+	--color-danger:               #f87171;
+	--color-danger-hover:         #fca5a5;
+	--color-danger-active:        #fecaca;
+	--color-danger-ring:          #f87171;
+	--color-success:              #4ade80;
+	--color-success-bg:           #052e16;
+	--color-success-border:       #166534;
+	--color-warning:              #fbbf24;
+	--color-warning-bg:           #1c1200;
+	--color-warning-border:       #92400e;
+	--color-surface:              #111113;
+	--color-surface-hover:        #1c1c1f;
+	--color-surface-active:       #26262a;
+	--color-surface-border:       #2e2e32;
+	--color-surface-border-hover: #3e3e43;
+	--color-text:                 #e8e8ea;
+	--color-text-muted:           #8e8e9a;
+	--color-text-subtle:          #54545e;
+	--color-text-inverted:        #111113;
+	--color-input-border:         #2e2e32;
+	--color-input-border-hover:   #3e3e43;
+	--color-input-ring:           #e8e8ea;
+	--color-input-placeholder:    #54545e;
+	--color-input-disabled-bg:    #1c1c1f;
+	--color-input-disabled-text:  #2e2e32;
+	--color-input-error:          #f87171;
+	--color-input-error-ring:     #f87171;
 }
 
 /* ─── Scrollbar ──────────────────────────────────────── */

@@ -1,5 +1,5 @@
-import { DocsSidebar } from '@/src/docs/components/DocsSidebar';
-import { TopNav } from '@/src/docs/components/TopNav';
+import { DocsSidebar } from '@/app/_docs/components/DocsSidebar';
+import { TopNav } from '@/app/_docs/components/TopNav';
 
 const DocsLayout = (
   {

@@ -4,14 +4,16 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Themes',
-	description: 'Switch between built-in Obi UI themes — Zinc, Violet, Rose, and Terminal — or create your own by overriding CSS custom property tokens.',
+	description: 'Switch between built-in Obi UI themes — Zinc, Ocean, Ember, Forest, Noir, and Plum — or create your own by overriding CSS custom property tokens.',
 };
 
 const THEME_DESCRIPTIONS: Record<string, string> = {
-	default:  'Clean and minimal. Pure white surfaces with jet-black brand — a neutral premium look that works in any context.',
-	violet:   'Rich purple brand with barely-tinted white surfaces in light mode and a deep indigo undertone in dark mode.',
-	rose:     'Crisp rose brand over barely-tinted surfaces. Dark mode carries a deep crimson undertone without competing with content.',
-	terminal: 'Green-on-dark inspired by classic terminal aesthetics. Neutral surfaces in light mode; near-black with bright green brand in dark.',
+	default: 'Clean and minimal. Pure white surfaces with jet-black brand — a neutral premium look that works in any context.',
+	ocean:   'Deep sky blue brand over cool blue-tinted surfaces. Dark mode drops into a true deep navy with precise elevation steps.',
+	ember:   'Warm orange brand with amber-tinted surfaces. Dark mode goes to a near-black with deep warm undertones — rich without being aggressive.',
+	forest:  'Fresh emerald brand over subtly green-tinted surfaces. Dark mode is a true deep forest — near-black with green undertones and clear hierarchy.',
+	noir:    'Cool slate surfaces with a deep charcoal brand. Quieter than Zinc — every surface has a blue undertone that reads refined and editorial.',
+	plum:    'Rich violet brand over barely-tinted surfaces. Dark mode is deep violet-black — luxurious, design-forward, and high contrast.',
 };
 
 const THEME_SHAPE_SNIPPET = `import type { Theme } from '@/src/themes/types';
@@ -43,9 +45,9 @@ export const myTheme: Theme = {
 };`;
 
 const APPLY_SNIPPET = `// Wrap your preview area with the theme's token map
-import { violetTheme } from '@/src/themes/violet';
+import { oceanTheme } from '@/src/themes/ocean';
 
-<div style={violetTheme.light as React.CSSProperties}>
+<div style={oceanTheme.light as React.CSSProperties}>
   <YourApp />
 </div>`;
 
@@ -111,7 +113,7 @@ const ThemesPage = () =>
 				<div className='flex flex-col gap-1'>
 					<h2 className='text-xl font-semibold text-text'>Pre-built themes</h2>
 					<p className='text-sm text-text-muted'>
-						Four themes ship with Obi UI. Import them from{' '}
+						Six themes ship with Obi UI. Import them from{' '}
 						<InlineCode>@/src/themes</InlineCode>.
 					</p>
 				</div>
@@ -170,6 +172,16 @@ const ThemesPage = () =>
 					palette used by all components when no theme wrapper is present. Dark mode
 					overrides sit immediately below in the <InlineCode>.dark</InlineCode>{' '}
 					selector.
+				</p>
+				<p className='text-sm text-text-muted leading-relaxed'>
+					These values are generated, not hand-written. The source of truth is the
+					set of JSON files in <InlineCode>tokens/</InlineCode> (one per theme, per
+					mode — e.g. <InlineCode>tokens/zinc.light.json</InlineCode>), plus{' '}
+					<InlineCode>tokens/motion.json</InlineCode>. Running{' '}
+					<InlineCode>npm run tokens</InlineCode> compiles those files into{' '}
+					<InlineCode>src/tokens/colors.ts</InlineCode> and the CSS custom properties
+					in <InlineCode>globals.css</InlineCode>. Edit the JSON, then re-run the
+					script — do not edit the generated files directly.
 				</p>
 				<p className='text-sm text-text-muted leading-relaxed'>
 					Themes do not need to redefine every token — only the ones that differ from

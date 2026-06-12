@@ -1,11 +1,11 @@
-import { TimelineHorizontalDemo } from '@/src/docs/components/examples/TimelineHorizontalDemo';
-import { TimelineDeployDemo } from '@/src/docs/components/examples/TimelineDeployDemo';
-import { SkeletonShowcase } from '@/src/docs/components/examples/SkeletonShowcase';
-import { ComponentLivePreview } from '@/src/docs/components/ComponentLivePreview';
-import { ComponentPreview } from '@/src/docs/components/ComponentPreview';
+import { TimelineHorizontalDemo } from '@/app/_docs/components/examples/TimelineHorizontalDemo';
+import { TimelineDeployDemo } from '@/app/_docs/components/examples/TimelineDeployDemo';
+import { SkeletonShowcase } from '@/app/_docs/components/examples/SkeletonShowcase';
+import { ComponentLivePreview } from '@/app/_docs/components/ComponentLivePreview';
+import { ComponentPreview } from '@/app/_docs/components/ComponentPreview';
 import { CodeBlock } from '@/src/components/CodeBlock/CodeBlock';
-import { PropsTable } from '@/src/docs/components/PropsTable';
-import { getComponent, registry } from '@/src/docs/registry';
+import { PropsTable } from '@/app/_docs/components/PropsTable';
+import { getComponent, registry } from '@/app/_docs/registry';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 const DESCRIPTION = 'A copy-paste React component library. Install only the components you need, own the source code, and never fight the library.';
-const SITE_URL    = 'https://obi-ui.vercel.app';
+const SITE_URL    = 'https://ui.ryangarfinkel.dev';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

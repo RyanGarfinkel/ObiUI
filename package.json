@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --project unit",
     "test:watch": "vitest --project unit",
+    "tokens": "node scripts/build-tokens.mjs",
     "prepare": "husky"
   },
   "dependencies": {

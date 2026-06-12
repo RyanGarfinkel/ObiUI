@@ -1,7 +1,7 @@
-import { registry } from '@/src/docs/registry/index';
+import { registry } from '@/app/_docs/registry/index';
 import type { MetadataRoute } from 'next';
 
-const BASE = 'https://obi-ui.vercel.app';
+const BASE = 'https://ui.ryangarfinkel.dev';
 
 export default function sitemap(): MetadataRoute.Sitemap
 {

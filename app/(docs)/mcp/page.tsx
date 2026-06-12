@@ -6,7 +6,28 @@ export const metadata: Metadata = {
 	description: 'Connect Obi UI to Claude or any MCP-compatible AI. The server exposes every component spec, token definition, and design pattern as a live resource.',
 };
 
-const McpPage = () => {
+const MCP_URL = 'https://ui.ryangarfinkel.dev/api/mcp';
+
+const CLAUDE_DESKTOP_CONFIG = `{
+  "mcpServers": {
+    "obi-ui": {
+      "type": "http",
+      "url": "${MCP_URL}"
+    }
+  }
+}`;
+
+const CLAUDE_CODE_CONFIG = `{
+  "mcpServers": {
+    "obi-ui": {
+      "type": "http",
+      "url": "${MCP_URL}"
+    }
+  }
+}`;
+
+const McpPage = () =>
+{
   return (
     <div className='flex flex-col gap-12'>
 
@@ -25,20 +46,17 @@ const McpPage = () => {
           >
             Model Context Protocol
           </a>{' '}
-          server. Connect it to Claude or any MCP-compatible AI tool and it
-          will have live access to every component spec, design token, and
-          pattern — so it uses the actual Obi UI API instead of guessing.
+          server hosted at{' '}
+          <code className='font-mono text-xs'>/api/mcp</code>. Connect it to
+          Claude or any MCP-compatible AI tool and it will have live access to
+          every component spec, design token, and pattern — so it uses the
+          actual Obi UI API instead of guessing.
         </p>
       </section>
 
-      {/* What it does */}
+      {/* What it exposes */}
       <section className='flex flex-col gap-4'>
         <h2 className='text-xl font-semibold text-text'>What the server exposes</h2>
-        <p className='text-sm text-text-muted leading-relaxed'>
-          The MCP server runs as a stdio process and exposes three resources
-          and two tools. All data is read from the source files at request
-          time — it is always current, never stale.
-        </p>
         <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
@@ -100,67 +118,43 @@ const McpPage = () => {
       </section>
 
       {/* Setup */}
-      <section className='flex flex-col gap-5'>
+      <section className='flex flex-col gap-6'>
         <h2 className='text-xl font-semibold text-text'>Connecting to Claude</h2>
-        <p className='text-sm text-text-muted leading-relaxed'>
-          The MCP server runs as a local stdio process. To connect it to the
-          Claude desktop app, add an entry to your{' '}
-          <code className='font-mono text-xs'>claude_desktop_config.json</code>.
-          On macOS this file lives at{' '}
-          <code className='font-mono text-xs'>
-            ~/Library/Application Support/Claude/claude_desktop_config.json
-          </code>
-          .
-        </p>
 
         <div className='flex flex-col gap-2'>
-          <p className='text-sm font-medium text-text'>1. Build the server</p>
-          <CodeBlock code={'cd /path/to/your/design-system\nnpx tsx mcp/server.ts'} />
-        </div>
-
-        <div className='flex flex-col gap-2'>
-          <p className='text-sm font-medium text-text'>
-            2. Add to <code className='font-mono text-xs'>claude_desktop_config.json</code>
-          </p>
-          <CodeBlock
-            code={`{
-  "mcpServers": {
-    "obi-ui": {
-      "command": "npx",
-      "args": ["tsx", "/absolute/path/to/your/design-system/mcp/server.ts"]
-    }
-  }
-}`}
-          />
-          <p className='text-xs text-text-muted'>
-            Replace <code className='font-mono text-xs'>/absolute/path/to/your/design-system</code> with the
-            actual path to this repo on your machine.
-          </p>
-        </div>
-
-        <div className='flex flex-col gap-2'>
-          <p className='text-sm font-medium text-text'>3. Restart Claude</p>
+          <p className='text-sm font-medium text-text'>Claude Desktop</p>
           <p className='text-sm text-text-muted leading-relaxed'>
-            Quit and reopen the Claude desktop app. You should see{' '}
-            <strong className='font-medium text-text'>obi-ui</strong> listed
-            under connected MCP servers in the bottom-left of the chat window.
+            Add an entry to your{' '}
+            <code className='font-mono text-xs'>claude_desktop_config.json</code>.
+            On macOS this file lives at{' '}
+            <code className='font-mono text-xs'>
+              ~/Library/Application Support/Claude/claude_desktop_config.json
+            </code>
+            .
           </p>
+          <CodeBlock code={CLAUDE_DESKTOP_CONFIG} />
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <p className='text-sm font-medium text-text'>Claude Code</p>
+          <p className='text-sm text-text-muted leading-relaxed'>
+            Add the same entry to your{' '}
+            <code className='font-mono text-xs'>.claude/settings.json</code> (project-level)
+            or <code className='font-mono text-xs'>~/.claude/settings.json</code> (global).
+          </p>
+          <CodeBlock code={CLAUDE_CODE_CONFIG} />
         </div>
       </section>
 
-      {/* Other MCP clients */}
+      {/* Other clients */}
       <section className='flex flex-col gap-4'>
         <h2 className='text-xl font-semibold text-text'>Other MCP clients</h2>
         <p className='text-sm text-text-muted leading-relaxed'>
-          Any MCP-compatible client can connect to the server the same way.
-          The server speaks the standard stdio transport, so it works with
-          Claude Code, Cursor, Windsurf, or any other tool that supports MCP.
-        </p>
-        <p className='text-sm text-text-muted leading-relaxed'>
-          For Claude Code, add the server to your{' '}
-          <code className='font-mono text-xs'>.claude/settings.json</code> using
-          the same <code className='font-mono text-xs'>mcpServers</code> format
-          as above.
+          Any client that supports the MCP Streamable HTTP transport can connect
+          directly to{' '}
+          <code className='font-mono text-xs'>{MCP_URL}</code>.
+          This includes Cursor, Windsurf, and any other tool that supports remote
+          MCP servers.
         </p>
       </section>
 
@@ -193,9 +187,8 @@ const McpPage = () => {
         <p className='text-sm text-text-muted leading-relaxed'>
           Each component has a <code className='font-mono text-xs'>spec.md</code> file
           alongside its source code. The MCP server reads these files at request
-          time — there is no build step and no cache to invalidate. When you
-          update a component and update its spec, the server immediately returns
-          the new information.
+          time — there is no cache to invalidate. When you update a component
+          and update its spec, the server immediately returns the new information.
         </p>
         <p className='text-sm text-text-muted leading-relaxed'>
           The spec format is documented in{' '}

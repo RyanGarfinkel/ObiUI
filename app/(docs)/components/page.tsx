@@ -1,5 +1,11 @@
-import { registry } from '@/src/docs/registry';
+import { registry } from '@/app/_docs/registry';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+	title: 'Components',
+	description: 'Browse the full Obi UI component registry — accessible, copy-paste React components organized by category.',
+};
 
 const CATEGORIES = [
   'Actions',
@@ -10,6 +16,7 @@ const CATEGORIES = [
   'Disclosure',
   'Overlay',
   'Feedback',
+  'Effects',
   'Charts',
   'DnD',
   'Canvas',
