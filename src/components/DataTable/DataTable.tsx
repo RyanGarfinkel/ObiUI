@@ -199,7 +199,7 @@ const DataTable = <T extends Record<string, any>>(
 							</th>
 						)}
 
-						{columns.map(col =>
+						{columns.map((col, colIndex) =>
 						{
 							const isSorted = sortKey === col.key;
 							const ariaSort = !col.sortable
@@ -210,7 +210,7 @@ const DataTable = <T extends Record<string, any>>(
 
 							return (
 								<th
-									key={col.key}
+									key={`${col.key}-${colIndex}`}
 									className='px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-muted'
 									style={col.width ? { width: col.width } : undefined}
 									aria-sort={ariaSort}
@@ -283,11 +283,11 @@ const DataTable = <T extends Record<string, any>>(
 										</td>
 									)}
 
-									{columns.map(col =>
+									{columns.map((col, colIndex) =>
 									{
 										const value = row[col.key];
 										return (
-											<td key={col.key} className='px-4 py-3 text-sm text-text'>
+											<td key={`${col.key}-${colIndex}`} className='px-4 py-3 text-sm text-text'>
 												{col.render ? col.render(value, row) : String(value ?? '')}
 											</td>
 										);

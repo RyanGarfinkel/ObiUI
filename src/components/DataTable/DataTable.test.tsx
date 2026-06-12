@@ -75,6 +75,28 @@ describe('DataTable', () =>
 		expect(cells[0].textContent).toBe('ACTIVE');
 	});
 
+	it('does not warn about duplicate keys when two columns share an accessor key', () =>
+	{
+		const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+		const duplicateColumns: ColumnDef<Person>[] = [
+			...COLUMNS,
+			{
+				key:    'status',
+				header: 'Status (raw)',
+				render: (_val, row) => <span>{row.status.toLowerCase()}</span>,
+			},
+		];
+		renderTable({ columns: duplicateColumns });
+
+		const duplicateKeyWarnings = consoleError.mock.calls.filter(args =>
+			args.some(arg => typeof arg === 'string' && arg.includes('same key'))
+		);
+		expect(duplicateKeyWarnings).toEqual([]);
+
+		consoleError.mockRestore();
+	});
+
 	it('shows empty message when data is empty', () =>
 	{
 		renderTable({ data: [] });
