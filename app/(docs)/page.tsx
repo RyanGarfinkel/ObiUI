@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-	title: { absolute: 'Obi UI — Copy-paste React components' },
+	title: { absolute: 'DaFink UI — Copy-paste React components' },
 	description: 'Browse accessible, copy-paste React components built on Tailwind v4. Own your UI code — no black-box packages, no fighting the library. Free and open source on GitHub.',
 };
 
@@ -41,7 +41,7 @@ const Home = () =>
 			{/* Hero */}
 			<section className='flex flex-col gap-5 pt-2'>
 				<h1 className='text-4xl font-semibold tracking-tight text-text'>
-					Obi UI
+					DaFink UI
 				</h1>
 				<p className='text-lg text-text-muted leading-relaxed max-w-2xl'>
 					A React component library built around one idea: you should own your
@@ -87,9 +87,9 @@ const Home = () =>
 				</div>
 			</section>
 
-			{/* Why Obi UI */}
+			{/* Why DaFink UI */}
 			<section className='flex flex-col gap-4'>
-				<h2 className='text-xl font-semibold text-text'>Why Obi UI?</h2>
+				<h2 className='text-xl font-semibold text-text'>Why DaFink UI?</h2>
 				<div className='flex flex-col gap-4 text-sm text-text-muted leading-relaxed'>
 					<p>
 						Most component libraries ship as npm packages. You import a
@@ -99,7 +99,7 @@ const Home = () =>
 						upgrade breaks something three layers deep.
 					</p>
 					<p>
-						Obi UI takes the opposite approach: run a single CLI command and
+						DaFink UI takes the opposite approach: run a single CLI command and
 						the component&apos;s source code is copied directly into your project.
 						You own it. You can read every line, edit any behaviour, and never
 						worry about a breaking upgrade. Components are not a dependency —
@@ -137,9 +137,9 @@ const Home = () =>
 						<p className='text-sm text-text-muted leading-relaxed'>
 							Every color, radius, and timing value in every component resolves
 							through a CSS custom property. Swap the tokens, change the look —
-							no component modifications required. Dark mode and the three
-							sample themes (Zinc, Ocean, Warm) all work this way. Bring your
-							own brand by overriding the same tokens.
+							no component modifications required. Dark mode and all six themes
+							(Zinc, Ocean, Ember, Forest, Noir, and Plum) work this way. Bring
+							your own brand by overriding the same tokens.
 						</p>
 					</div>
 
@@ -184,7 +184,7 @@ const Home = () =>
 				<div className='flex flex-col gap-4 text-sm text-text-muted leading-relaxed'>
 					<p>
 						AI coding agents are writing a significant and growing share of
-						production UI code. Obi UI was built with that reality from the
+						production UI code. DaFink UI was built with that reality from the
 						start — not adapted to it after the fact. Claude wrote large portions
 						of this library. That matters because it means the patterns, naming,
 						and structure were tested by an agent trying to understand and extend
@@ -219,17 +219,17 @@ const Home = () =>
 				<p className='text-sm text-text-muted leading-relaxed'>
 					Install a component with a single command. The CLI copies the source
 					into <code className='font-mono text-xs'>components/ui/</code>, installs
-					any npm dependencies, and transitively resolves any other Obi UI
+					any npm dependencies, and transitively resolves any other DaFink UI
 					components it depends on.
 				</p>
 				<div className='flex flex-col gap-2'>
 					<div className='bg-surface-active rounded-lg px-4 py-3 font-mono text-sm text-text flex items-center gap-2'>
 						<span className='text-text-subtle select-none'>$</span>
-						<span>npx @obi/ui add button</span>
+						<span>npx @dafink/ui add button</span>
 					</div>
 					<div className='bg-surface-active rounded-lg px-4 py-3 font-mono text-sm text-text flex items-center gap-2'>
 						<span className='text-text-subtle select-none'>$</span>
-						<span>npx @obi/ui add modal</span>
+						<span>npx @dafink/ui add modal</span>
 						<span className='ml-auto text-xs text-text-subtle font-sans'>installs Button too</span>
 					</div>
 				</div>
@@ -250,13 +250,13 @@ const Home = () =>
 				<div className='flex flex-col gap-2'>
 					<h2 className='text-xl font-semibold text-text'>Open source</h2>
 					<p className='text-sm text-text-muted leading-relaxed max-w-2xl'>
-						Obi UI is free and open source. The code, the docs, and the CLI are all
+						DaFink UI is free and open source. The code, the docs, and the CLI are all
 						on GitHub. Use it, fork it, contribute back — it&apos;s yours.
 					</p>
 				</div>
 				<div className='flex flex-wrap gap-3'>
 					<a
-						href='https://github.com/RyanGarfinkel/ObiUI'
+						href='https://github.com/RyanGarfinkel/DaFinkUI'
 						target='_blank'
 						rel='noopener noreferrer'
 						className='inline-flex items-center gap-2 rounded-md border border-surface-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors duration-[var(--duration-fast)] hover:bg-surface-hover active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
@@ -267,7 +267,7 @@ const Home = () =>
 						View on GitHub
 					</a>
 					<a
-						href='https://github.com/RyanGarfinkel/ObiUI/blob/main/CONTRIBUTING.md'
+						href='https://github.com/RyanGarfinkel/DaFinkUI/blob/main/CONTRIBUTING.md'
 						target='_blank'
 						rel='noopener noreferrer'
 						className='inline-flex items-center gap-2 rounded-md border border-surface-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors duration-[var(--duration-fast)] hover:bg-surface-hover active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
@@ -275,6 +275,19 @@ const Home = () =>
 						Contribute
 					</a>
 				</div>
+			</section>
+
+			{/* Creator */}
+			<section className='flex items-center gap-1.5 text-sm text-text-muted pb-2'>
+				<span>Created by</span>
+				<a
+					href='https://ryangarfinkel.dev'
+					target='_blank'
+					rel='noopener noreferrer'
+					className='font-medium text-text underline underline-offset-4 hover:text-text-muted transition-colors duration-[var(--duration-fast)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring rounded-sm'
+				>
+					Ryan Garfinkel
+				</a>
 			</section>
 
 		</div>

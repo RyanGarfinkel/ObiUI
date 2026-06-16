@@ -887,7 +887,7 @@ const ExamplesPage = () =>
 			<div className='flex flex-col gap-2'>
 				<h1 className='text-3xl font-semibold tracking-tight text-text'>Examples</h1>
 				<p className='text-base text-text-muted leading-relaxed'>
-					Real patterns assembled from Obi UI components. Copy the code and drop it straight into your project.
+					Real patterns assembled from DaFink UI components. Copy the code and drop it straight into your project.
 				</p>
 			</div>
 

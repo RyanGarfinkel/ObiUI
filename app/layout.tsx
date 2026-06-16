@@ -19,30 +19,29 @@ const SITE_URL    = 'https://ui.ryangarfinkel.dev';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    template: '%s | Obi UI',
-    default: 'Obi UI — Copy-paste React components',
+    template: '%s | DaFink UI',
+    default: 'DaFink UI — Copy-paste React components',
   },
   description: DESCRIPTION,
-  applicationName: 'Obi UI',
+  applicationName: 'DaFink UI',
   keywords: [
     'react', 'component library', 'design system', 'tailwind', 'tailwind v4',
     'copy-paste', 'ui components', 'accessible', 'next.js', 'open source',
     'headless', 'radix', 'shadcn', 'react components', 'typescript',
     'wcag', 'keyboard navigation', 'dark mode', 'theming', 'css variables',
   ],
-  authors: [{ name: 'Obi UI', url: 'https://github.com/RyanGarfinkel/ObiUI' }],
+  authors: [{ name: 'DaFink UI', url: 'https://github.com/RyanGarfinkel/DaFinkUI' }],
   openGraph: {
-    title: 'Obi UI — Copy-paste React components',
+    title: 'DaFink UI — Copy-paste React components',
     description: DESCRIPTION,
     type: 'website',
     url: SITE_URL,
-    siteName: 'Obi UI',
+    siteName: 'DaFink UI',
   },
   twitter: {
     card: 'summary',
-    title: 'Obi UI — Copy-paste React components',
+    title: 'DaFink UI — Copy-paste React components',
     description: DESCRIPTION,
-    site: '@obiui',
   },
   robots: {
     index: true,

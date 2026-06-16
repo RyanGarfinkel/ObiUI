@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Themes',
-	description: 'Switch between built-in Obi UI themes — Zinc, Ocean, Ember, Forest, Noir, and Plum — or create your own by overriding CSS custom property tokens.',
+	description: 'Switch between built-in DaFink UI themes — Zinc, Ocean, Ember, Forest, Noir, and Plum — or create your own by overriding CSS custom property tokens.',
 };
 
 const THEME_DESCRIPTIONS: Record<string, string> = {
@@ -69,7 +69,7 @@ const ThemesPage = () =>
 			<div className='flex flex-col gap-2'>
 				<h1 className='text-3xl font-semibold tracking-tight text-text'>Themes</h1>
 				<p className='text-base text-text-muted leading-relaxed'>
-					Obi UI is fully themeable via CSS custom properties. Swapping a theme
+					DaFink UI is fully themeable via CSS custom properties. Swapping a theme
 					changes the entire visual identity of your app without touching a single
 					component.
 				</p>
@@ -79,7 +79,7 @@ const ThemesPage = () =>
 			<div className='flex flex-col gap-4'>
 				<h2 className='text-xl font-semibold text-text'>How themes work</h2>
 				<p className='text-sm text-text-muted leading-relaxed'>
-					Every component in Obi UI is styled through token classes like{' '}
+					Every component in DaFink UI is styled through token classes like{' '}
 					<InlineCode>bg-brand</InlineCode> and <InlineCode>text-text-muted</InlineCode>.
 					These resolve to CSS custom properties defined in{' '}
 					<InlineCode>globals.css</InlineCode>. A theme is simply a map of those
@@ -98,7 +98,7 @@ const ThemesPage = () =>
 				<p className='text-sm text-text-muted leading-relaxed'>
 					Pass the theme&apos;s <InlineCode>light</InlineCode> or{' '}
 					<InlineCode>dark</InlineCode> token map as an inline style on any wrapper
-					element. All Obi UI components beneath it will re-theme automatically.
+					element. All DaFink UI components beneath it will re-theme automatically.
 				</p>
 				<CodeBlock code={APPLY_SNIPPET} />
 				<p className='text-sm text-text-muted leading-relaxed'>
@@ -113,7 +113,7 @@ const ThemesPage = () =>
 				<div className='flex flex-col gap-1'>
 					<h2 className='text-xl font-semibold text-text'>Pre-built themes</h2>
 					<p className='text-sm text-text-muted'>
-						Six themes ship with Obi UI. Import them from{' '}
+						Six themes ship with DaFink UI. Import them from{' '}
 						<InlineCode>@/src/themes</InlineCode>.
 					</p>
 				</div>

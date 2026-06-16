@@ -1,6 +1,8 @@
 'use client';
 import { CommandPalette, CommandGroup, CommandItem } from '@/src/components/CommandPalette/CommandPalette';
 import { themes, getThemeByName, type Theme } from '@/src/themes';
+import { styles, getStyleByName, type Style } from '@/src/styles';
+import { MobileNav } from '@/app/_docs/components/MobileNav';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Select } from '@/src/components/Select/Select';
 import { registry } from '@/app/_docs/registry';
@@ -12,6 +14,7 @@ export const TopNav = () =>
 	const [paletteOpen, setPaletteOpen] = useState(false);
 	const [isDark,      setIsDark]      = useState(false);
 	const [activeTheme, setActiveTheme] = useState<Theme>(themes[0]);
+	const [activeStyle, setActiveStyle] = useState<Style>(styles[0]);
 
 	const router = useRouter();
 
@@ -83,6 +86,48 @@ export const TopNav = () =>
 		applyTheme(theme);
 	};
 
+	// ─── Surface style (orthogonal to the color palette) ──────────────────────
+	const applyStyle = (style: Style) =>
+	{
+		let styleEl = document.getElementById('style-override') as HTMLStyleElement | null;
+
+		if(style.name === 'minimal')
+		{
+			styleEl?.remove();
+			return;
+		}
+
+		if(!styleEl)
+		{
+			styleEl = document.createElement('style');
+			styleEl.id = 'style-override';
+			document.head.appendChild(styleEl);
+		}
+
+		const lightVars = Object.entries(style.light).map(([k, v]) => `  ${k}: ${v};`).join('\n');
+		const darkVars  = Object.entries(style.dark).map(([k, v]) => `  ${k}: ${v};`).join('\n');
+		styleEl.textContent = `:root {\n${lightVars}\n}\n.dark {\n${darkVars}\n}`;
+	};
+
+	useEffect(() =>
+	{
+		const saved = localStorage.getItem('design-style');
+		if(saved)
+		{
+			const style = getStyleByName(saved);
+			// eslint-disable-next-line react-hooks/set-state-in-effect
+			setActiveStyle(style);
+			applyStyle(style);
+		}
+	}, []);
+
+	const handleStyleChange = (style: Style) =>
+	{
+		setActiveStyle(style);
+		localStorage.setItem('design-style', style.name);
+		applyStyle(style);
+	};
+
 	const toggleDark = () =>
 	{
 		const root  = document.documentElement;
@@ -101,20 +146,23 @@ export const TopNav = () =>
 
 	return (
 		<>
-			<header className='fixed top-0 left-0 right-0 z-50 h-14 border-b border-surface-border bg-surface/90 backdrop-blur-sm flex items-center px-4 gap-4'>
+			<header className='fixed top-0 left-0 right-0 z-50 h-14 border-b border-surface-border bg-surface/95 backdrop-blur-md flex items-center px-3 gap-2 sm:px-6 sm:gap-3'>
+				{/* Mobile nav drawer trigger */}
+				<MobileNav />
+
 				{/* Brand */}
 				<Link
 					href='/'
-					className='hidden lg:flex items-center gap-2.5 min-w-[9rem] text-text rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
+					className='hidden sm:flex items-center gap-2 shrink-0 text-text rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
 				>
-					<svg width='22' height='22' viewBox='0 0 22 22' fill='currentColor' aria-hidden='true'>
+					<svg width='20' height='20' viewBox='0 0 22 22' fill='currentColor' aria-hidden='true'>
 						<path
 							fillRule='evenodd'
 							clipRule='evenodd'
 							d='M5.5 0h11A5.5 5.5 0 0 1 22 5.5v11A5.5 5.5 0 0 1 16.5 22h-11A5.5 5.5 0 0 1 0 16.5v-11A5.5 5.5 0 0 1 5.5 0zm5.5 5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 1 0 0-11z'
 						/>
 					</svg>
-					<span className='text-sm font-semibold'>Obi UI</span>
+					<span className='text-sm font-semibold tracking-tight'>DaFink UI</span>
 				</Link>
 
 				{/* Search trigger */}
@@ -125,7 +173,7 @@ export const TopNav = () =>
 					aria-keyshortcuts='/ Meta+k'
 					className={[
 						'relative flex-1 max-w-sm mx-auto flex items-center gap-2',
-						'rounded-md border border-surface-border bg-surface px-3 py-1.5',
+						'rounded-lg border border-surface-border bg-surface-hover/40 px-3 py-2 md:py-1.5',
 						'text-sm text-text-subtle text-left',
 						'transition-colors duration-[var(--duration-fast)]',
 						'hover:border-surface-border-hover hover:bg-surface-hover',
@@ -156,30 +204,46 @@ export const TopNav = () =>
 				</button>
 
 				{/* Right controls */}
-				<div className='flex items-center gap-2'>
-					<Select
-						options={themes.map((t) => ({ value: t.name, label: t.label }))}
-						value={activeTheme.name}
-						onChange={(name) => handleThemeChange(getThemeByName(name))}
-						size='sm'
-						className='w-28'
-					/>
+				<div className='flex items-center gap-1.5'>
+					{/* Surface style — orthogonal to the color palette */}
+					<div className='hidden sm:block'>
+						<Select
+							options={styles.map((s) => ({ value: s.name, label: s.label }))}
+							value={activeStyle.name}
+							onChange={(name) => handleStyleChange(getStyleByName(name))}
+							size='sm'
+							className='w-32'
+						/>
+					</div>
+
+					{/* Color palette */}
+					<div className='hidden sm:block'>
+						<Select
+							options={themes.map((t) => ({ value: t.name, label: t.label }))}
+							value={activeTheme.name}
+							onChange={(name) => handleThemeChange(getThemeByName(name))}
+							size='sm'
+							className='w-32'
+						/>
+					</div>
+
+					<div className='hidden sm:block h-4 w-px bg-surface-border mx-0.5' aria-hidden='true' />
 
 					<button
 						type='button'
 						onClick={toggleDark}
 						aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-						className='flex h-8 w-8 items-center justify-center rounded-md text-text-muted transition-colors duration-[var(--duration-fast)] hover:bg-surface-hover hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
+						className='flex h-9 w-9 md:h-8 md:w-8 items-center justify-center rounded-md text-text-muted transition-colors duration-[var(--duration-fast)] hover:bg-surface-hover hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
 					>
 						{isDark
 							? (
-								<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
+								<svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
 									<circle cx='12' cy='12' r='4' />
 									<path d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41' />
 								</svg>
 							)
 							: (
-								<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
+								<svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
 									<path d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z' />
 								</svg>
 							)

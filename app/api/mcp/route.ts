@@ -7,18 +7,18 @@ import { z } from 'zod';
 
 const buildServer = (): McpServer =>
 {
-	const server = new McpServer({ name: 'obi-ui', version: '1.0.0' });
+	const server = new McpServer({ name: 'dafink-ui', version: '1.0.0' });
 
-	server.resource('components', 'obi://components', async () => ({
-		contents: [{ uri: 'obi://components', text: JSON.stringify(listComponents()) }],
+	server.resource('components', 'dafink://components', async () => ({
+		contents: [{ uri: 'dafink://components', text: JSON.stringify(listComponents()) }],
 	}));
 
-	server.resource('tokens', 'obi://tokens', async () => ({
-		contents: [{ uri: 'obi://tokens', text: JSON.stringify(getTokens(), null, 2) }],
+	server.resource('tokens', 'dafink://tokens', async () => ({
+		contents: [{ uri: 'dafink://tokens', text: JSON.stringify(getTokens(), null, 2) }],
 	}));
 
-	server.resource('patterns', 'obi://patterns', async () => ({
-		contents: [{ uri: 'obi://patterns', text: JSON.stringify(listPatterns()) }],
+	server.resource('patterns', 'dafink://patterns', async () => ({
+		contents: [{ uri: 'dafink://patterns', text: JSON.stringify(listPatterns()) }],
 	}));
 
 	server.tool(

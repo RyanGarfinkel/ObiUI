@@ -12,11 +12,11 @@ import DataTable, { type ColumnDef, type PaginatorVariant } from '@/src/componen
 import { FormDescription, FormField, FormLabel, FormSection } from '@/src/components/Form/Form';
 import { AreaChart, BarChart, DonutChart, LineChart } from '@/src/components/Charts/Charts';
 import Mosaic, { MosaicTile, type MosaicTileLayout } from '@/src/components/Mosaic/Mosaic';
+import { Skeleton, SkeletonCard, SkeletonImage } from '@/src/components/Skeleton/Skeleton';
 import ToggleGroup, { ToggleGroupItem } from '@/src/components/ToggleGroup/ToggleGroup';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/components/Tabs/Tabs';
 import Graph, { type GraphNode, type GraphEdge } from '@/src/components/Graph/Graph';
 import FunctionPlotter from '@/src/components/FunctionPlotter/FunctionPlotter';
-import { Skeleton, SkeletonCard } from '@/src/components/Skeleton/Skeleton';
 import { Timeline, TimelineItem } from '@/src/components/Timeline/Timeline';
 import { Card, CardContent, CardHeader } from '@/src/components/Card/Card';
 import { ToastProvider, useToast } from '@/src/components/Toast/Toast';
@@ -212,6 +212,7 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
     case 'skeleton':
       return (
         <div className='w-full max-w-sm flex flex-col gap-6'>
+          <SkeletonImage aspectRatio='16/9' />
           <div className='flex items-center gap-3'>
             <Skeleton width='40px' height='40px' className='rounded-full shrink-0' />
             <div className='flex flex-col gap-2 flex-1'>
@@ -274,7 +275,7 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
         <div className='w-full max-w-sm'>
           <Accordion type='single' collapsible defaultValue='item-1'>
             <AccordionItem value='item-1'>
-              <AccordionTrigger>What is Obi UI?</AccordionTrigger>
+              <AccordionTrigger>What is DaFink UI?</AccordionTrigger>
               <AccordionContent>
                 A copy-paste design system for React — install only what you need.
               </AccordionContent>
@@ -282,7 +283,7 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
             <AccordionItem value='item-2'>
               <AccordionTrigger>How do I install a component?</AccordionTrigger>
               <AccordionContent>
-                Run <code className='font-mono text-xs'>npx @obi/ui add button</code> and the component is copied into your project.
+                Run <code className='font-mono text-xs'>npx @dafink/ui add button</code> and the component is copied into your project.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value='item-3'>
@@ -547,10 +548,10 @@ export const ComponentLivePreview = ({ slug }: ComponentLivePreviewProps) => {
         <div className='w-full max-w-sm'>
           <Timeline>
             <TimelineItem title='Install the CLI'>
-              Run <code className='font-mono text-xs'>npx @obi/ui init</code> in your project root.
+              Run <code className='font-mono text-xs'>npx @dafink/ui init</code> in your project root.
             </TimelineItem>
             <TimelineItem title='Add components'>
-              Use <code className='font-mono text-xs'>npx @obi/ui add button</code> to copy components into your project.
+              Use <code className='font-mono text-xs'>npx @dafink/ui add button</code> to copy components into your project.
             </TimelineItem>
             <TimelineItem title='Import and use'>
               Import from <code className='font-mono text-xs'>@/components/ui</code> and start building.

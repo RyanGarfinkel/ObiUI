@@ -1,21 +1,7 @@
 import { Sidebar, SidebarSection } from '@/src/components/Sidebar/Sidebar';
 import { DocsSidebarLink } from '@/app/_docs/components/DocsSidebarLink';
+import { CATEGORIES } from '@/app/_docs/registry/categories';
 import { registry } from '@/app/_docs/registry';
-
-const CATEGORIES = [
-	'Actions',
-	'Inputs',
-	'Display',
-	'Feedback',
-	'Navigation',
-	'Disclosure',
-	'Forms',
-	'Effects',
-	'Charts',
-	'Drag & Drop',
-	'Canvas',
-] as const;
-
 
 export const DocsSidebar = () => {
 	const byCategory = CATEGORIES.reduce<
@@ -31,16 +17,18 @@ export const DocsSidebar = () => {
 		<Sidebar
 			width='w-56'
 			height='h-[calc(100vh-3.5rem)]'
-			className='fixed left-0 top-14'
+			className='hidden md:block fixed left-0 top-14'
 		>
 			<nav className='flex flex-col gap-1'>
 				<DocsSidebarLink href='/'>Home</DocsSidebarLink>
 				<DocsSidebarLink href='/installation'>Installation</DocsSidebarLink>
 				<DocsSidebarLink href='/themes'>Themes</DocsSidebarLink>
+				<DocsSidebarLink href='/styles'>Styles</DocsSidebarLink>
 				<DocsSidebarLink href='/typography'>Typography</DocsSidebarLink>
 				<DocsSidebarLink href='/components'>All Components</DocsSidebarLink>
 				<DocsSidebarLink href='/examples'>Examples</DocsSidebarLink>
 				<DocsSidebarLink href='/mcp'>MCP Server</DocsSidebarLink>
+				<DocsSidebarLink href='/skill'>Design Skill</DocsSidebarLink>
 			</nav>
 
 			{CATEGORIES.filter((cat) => byCategory[cat]).map((category) => (

@@ -40,7 +40,7 @@ const ComponentPage = async (
 
   if (!entry) notFound();
 
-  const installCommand = `npx @obi/ui add ${entry.slug}`;
+  const installCommand = `npx @dafink/ui add ${entry.slug}`;
 
   return (
     <div className='flex flex-col gap-10'>

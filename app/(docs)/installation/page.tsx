@@ -45,7 +45,7 @@ const InstallationPage = () => {
       <div className='flex flex-col gap-2'>
         <h1 className='text-3xl font-semibold tracking-tight text-text'>Installation</h1>
         <p className='text-base text-text-muted leading-relaxed'>
-          Obi UI is a copy-paste component library. There is no runtime package to
+          DaFink UI is a copy-paste component library. There is no runtime package to
           install — the CLI copies source files directly into your project so you own
           the code entirely.
         </p>
@@ -74,7 +74,7 @@ const InstallationPage = () => {
           <div className='flex flex-col gap-3'>
             <CodeBlock code={pmCommand(pm, 'dlx', 'create-next-app@latest my-app --typescript --tailwind --eslint')} />
             <p>
-              Obi UI requires <InlineCode>React 18+</InlineCode> and <InlineCode>Tailwind CSS v4</InlineCode>.
+              DaFink UI requires <InlineCode>React 18+</InlineCode> and <InlineCode>Tailwind CSS v4</InlineCode>.
               Any React framework works — Next.js is not required.
             </p>
           </div>
@@ -84,25 +84,25 @@ const InstallationPage = () => {
           <CodeBlock code={pmCommand(pm, 'install', 'tailwindcss @tailwindcss/postcss postcss')} />
         </TimelineItem>
 
-        <TimelineItem title='Run the Obi UI initialiser'>
+        <TimelineItem title='Run the DaFink UI initialiser'>
           <div className='flex flex-col gap-3'>
-            <CodeBlock code={pmCommand(pm, 'dlx', '@obi/ui init')} />
+            <CodeBlock code={pmCommand(pm, 'dlx', '@dafink/ui init')} />
             <p>
               This copies <InlineCode>globals.css</InlineCode> (with all design tokens) into your project
-              and writes a minimal <InlineCode>obi.config.json</InlineCode> in your root.
+              and writes a minimal <InlineCode>dafink.config.json</InlineCode> in your root.
             </p>
           </div>
         </TimelineItem>
 
         <TimelineItem title='Add components'>
           <div className='flex flex-col gap-3'>
-            <CodeBlock code={pmCommand(pm, 'dlx', '@obi/ui add button')} />
+            <CodeBlock code={pmCommand(pm, 'dlx', '@dafink/ui add button')} />
             <p>
               Each <InlineCode>add</InlineCode> command copies the component source into{' '}
               <InlineCode>src/components/ui/</InlineCode> and installs any required npm
               dependencies automatically. You can add multiple at once:
             </p>
-            <CodeBlock code={pmCommand(pm, 'dlx', '@obi/ui add button input card form')} />
+            <CodeBlock code={pmCommand(pm, 'dlx', '@dafink/ui add button input card form')} />
           </div>
         </TimelineItem>
 
@@ -126,7 +126,7 @@ export default function Page() {
         <CodeBlock code={pmCommand(pm, 'install', '<peer-dependency>')} />
         <p className='text-sm text-text-muted leading-relaxed'>
           The only global requirement is that your project imports{' '}
-          <InlineCode>globals.css</InlineCode> (or equivalent CSS with the Obi design
+          <InlineCode>globals.css</InlineCode> (or equivalent CSS with the DaFink design
           tokens defined). Without the tokens, the Tailwind utility classes used by
           components won&apos;t resolve to the right values.
         </p>

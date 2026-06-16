@@ -1,26 +1,12 @@
+import { CATEGORIES } from '@/app/_docs/registry/categories';
 import { registry } from '@/app/_docs/registry';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
 	title: 'Components',
-	description: 'Browse the full Obi UI component registry — accessible, copy-paste React components organized by category.',
+	description: 'Browse the full DaFink UI component registry — accessible, copy-paste React components organized by category.',
 };
-
-const CATEGORIES = [
-  'Actions',
-  'Inputs',
-  'Display',
-  'Navigation',
-  'Forms',
-  'Disclosure',
-  'Overlay',
-  'Feedback',
-  'Effects',
-  'Charts',
-  'DnD',
-  'Canvas',
-] as const;
 
 const ComponentsPage = () => {
   const byCategory = CATEGORIES.reduce<Record<string, typeof registry>>(

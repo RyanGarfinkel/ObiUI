@@ -642,6 +642,7 @@ export default function Example() {
     usage: `import {
   Skeleton,
   SkeletonCard,
+  SkeletonImage,
   SkeletonInput,
   SkeletonTableRow,
 } from '@/src/components/Skeleton/Skeleton';
@@ -649,6 +650,9 @@ export default function Example() {
 export default function Example() {
   return (
     <div className="flex flex-col gap-6 max-w-sm">
+      {/* Image placeholder */}
+      <SkeletonImage aspectRatio="16/9" />
+
       {/* Avatar + text row */}
       <div className="flex items-center gap-3">
         <Skeleton width="40px" height="40px" className="rounded-full shrink-0" />
@@ -715,6 +719,12 @@ export default function Example() {
         type: 'number',
         default: '4',
         description: 'SkeletonTableRow — number of equal-width column blocks per row.',
+      },
+      {
+        name: 'aspectRatio',
+        type: 'string',
+        default: '"16/9"',
+        description: 'SkeletonImage — CSS aspect-ratio value controlling height relative to width.',
       },
     ],
     dependencies: [],
@@ -874,15 +884,15 @@ export default function Example() {
     <div className="max-w-sm">
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1">
-          <AccordionTrigger>What is Obi UI?</AccordionTrigger>
+          <AccordionTrigger>What is DaFink UI?</AccordionTrigger>
           <AccordionContent>
-            Obi UI is a token-based component library for React, built on Tailwind v4.
+            DaFink UI is a token-based component library for React, built on Tailwind v4.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>How do I install it?</AccordionTrigger>
           <AccordionContent>
-            Run npx @obi/ui add [component] to copy any component into your project.
+            Run npx @dafink/ui add [component] to copy any component into your project.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
@@ -1582,10 +1592,10 @@ export default function Example() {
   return (
     <Timeline>
       <TimelineItem title="Install the CLI">
-        Run <code>npx @obi/ui init</code> in your project root.
+        Run <code>npx @dafink/ui init</code> in your project root.
       </TimelineItem>
       <TimelineItem title="Add components">
-        Use <code>npx @obi/ui add button input</code> to copy components into your project.
+        Use <code>npx @dafink/ui add button input</code> to copy components into your project.
       </TimelineItem>
       <TimelineItem title="Import and use">
         Import from <code>@/components/ui</code> and start building.
@@ -2682,14 +2692,14 @@ const NODES: GraphNode[] = [
   { id: 'nextjs',     label: 'Next.js'    },
   { id: 'typescript', label: 'TypeScript' },
   { id: 'tailwind',   label: 'Tailwind'   },
-  { id: 'obi',        label: 'Obi UI'     },
+  { id: 'dafink',        label: 'DaFink UI'     },
 ];
 
 const EDGES: GraphEdge[] = [
   { source: 'react',    target: 'nextjs'     },
   { source: 'react',    target: 'typescript' },
-  { source: 'nextjs',   target: 'obi'        },
-  { source: 'tailwind', target: 'obi'        },
+  { source: 'nextjs',   target: 'dafink'        },
+  { source: 'tailwind', target: 'dafink'        },
 ];
 
 export default function Example() {

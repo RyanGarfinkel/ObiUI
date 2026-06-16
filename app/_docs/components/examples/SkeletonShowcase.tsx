@@ -4,6 +4,7 @@ import {
 	Skeleton,
 	SkeletonCard,
 	SkeletonForm,
+	SkeletonImage,
 	SkeletonInput,
 	SkeletonTableRow,
 } from '@/src/components/Skeleton/Skeleton';
@@ -26,7 +27,7 @@ const EXAMPLES: Array<{
 
 export default function Example() {
   return (
-    <div className="flex flex-col gap-3 w-64">
+    <div className="flex flex-col gap-3 w-64 max-w-full">
       {/* Heading line */}
       <Skeleton width="55%" height="1.25rem" />
 
@@ -41,7 +42,7 @@ export default function Example() {
   );
 }`,
 		preview: (
-			<div className='flex flex-col gap-3 w-64'>
+			<div className='flex flex-col gap-3 w-64 max-w-full'>
 				<Skeleton width='55%' height='1.25rem' />
 				<Skeleton height='0.875rem' />
 				<Skeleton width='85%' height='0.875rem' />
@@ -58,14 +59,14 @@ export default function Example() {
 
 export default function Example() {
   return (
-    <div className="flex flex-col gap-4 w-72">
+    <div className="flex flex-col gap-4 w-72 max-w-full">
       <SkeletonCard lines={3} />
       <SkeletonCard lines={2} />
     </div>
   );
 }`,
 		preview: (
-			<div className='flex flex-col gap-4 w-72'>
+			<div className='flex flex-col gap-4 w-72 max-w-full'>
 				<SkeletonCard lines={3} />
 				<SkeletonCard lines={2} />
 			</div>
@@ -79,14 +80,14 @@ export default function Example() {
 
 export default function Example() {
   return (
-    <div className="flex flex-col gap-4 w-72">
+    <div className="flex flex-col gap-4 w-72 max-w-full">
       <SkeletonInput label />
       <SkeletonInput />
     </div>
   );
 }`,
 		preview: (
-			<div className='flex flex-col gap-4 w-72'>
+			<div className='flex flex-col gap-4 w-72 max-w-full'>
 				<SkeletonInput label />
 				<SkeletonInput />
 			</div>
@@ -99,9 +100,32 @@ export default function Example() {
 		code: `import { SkeletonForm } from '@/src/components/Skeleton/Skeleton';
 
 export default function Example() {
-  return <SkeletonForm fields={4} className="w-72" />;
+  return <SkeletonForm fields={4} className="w-72 max-w-full" />;
 }`,
-		preview: <SkeletonForm fields={4} className='w-72' />,
+		preview: <SkeletonForm fields={4} className='w-72 max-w-full' />,
+	},
+	{
+		id:    'image',
+		title: 'SkeletonImage',
+		desc:  'Rectangular image placeholder. Height derives from aspectRatio and the element\'s width.',
+		code: `import { SkeletonImage } from '@/src/components/Skeleton/Skeleton';
+
+export default function Example() {
+  return (
+    <div className="flex flex-col gap-4 w-72 max-w-full">
+      <SkeletonImage aspectRatio="16/9" />
+      <SkeletonImage aspectRatio="4/3" />
+      <SkeletonImage aspectRatio="1" className="w-32" />
+    </div>
+  );
+}`,
+		preview: (
+			<div className='flex flex-col gap-4 w-72 max-w-full'>
+				<SkeletonImage aspectRatio='16/9' />
+				<SkeletonImage aspectRatio='4/3' />
+				<SkeletonImage aspectRatio='1' className='w-32' />
+			</div>
+		),
 	},
 	{
 		id:    'table-row',

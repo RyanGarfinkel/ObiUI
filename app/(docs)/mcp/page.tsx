@@ -3,14 +3,14 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'MCP Server',
-	description: 'Connect Obi UI to Claude or any MCP-compatible AI. The server exposes every component spec, token definition, and design pattern as a live resource.',
+	description: 'Connect DaFink UI to Claude or any MCP-compatible AI. The server exposes every component spec, token definition, and design pattern as a live resource.',
 };
 
 const MCP_URL = 'https://ui.ryangarfinkel.dev/api/mcp';
 
 const CLAUDE_DESKTOP_CONFIG = `{
   "mcpServers": {
-    "obi-ui": {
+    "dafink-ui": {
       "type": "http",
       "url": "${MCP_URL}"
     }
@@ -19,7 +19,7 @@ const CLAUDE_DESKTOP_CONFIG = `{
 
 const CLAUDE_CODE_CONFIG = `{
   "mcpServers": {
-    "obi-ui": {
+    "dafink-ui": {
       "type": "http",
       "url": "${MCP_URL}"
     }
@@ -37,7 +37,7 @@ const McpPage = () =>
           MCP Server
         </h1>
         <p className='text-base text-text-muted leading-relaxed max-w-2xl'>
-          Obi UI ships a built-in{' '}
+          DaFink UI ships a built-in{' '}
           <a
             href='https://modelcontextprotocol.io'
             target='_blank'
@@ -50,7 +50,7 @@ const McpPage = () =>
           <code className='font-mono text-xs'>/api/mcp</code>. Connect it to
           Claude or any MCP-compatible AI tool and it will have live access to
           every component spec, design token, and pattern — so it uses the
-          actual Obi UI API instead of guessing.
+          actual DaFink UI API instead of guessing.
         </p>
       </section>
 
@@ -61,7 +61,7 @@ const McpPage = () =>
           <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
               <span className='text-xs font-mono font-medium text-brand bg-brand/10 px-2 py-0.5 rounded'>resource</span>
-              <code className='text-sm font-mono text-text'>obi://components</code>
+              <code className='text-sm font-mono text-text'>dafink://components</code>
             </div>
             <p className='text-sm text-text-muted leading-relaxed'>
               The full component registry — every slug, name, category,
@@ -72,7 +72,7 @@ const McpPage = () =>
           <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
               <span className='text-xs font-mono font-medium text-brand bg-brand/10 px-2 py-0.5 rounded'>resource</span>
-              <code className='text-sm font-mono text-text'>obi://tokens</code>
+              <code className='text-sm font-mono text-text'>dafink://tokens</code>
             </div>
             <p className='text-sm text-text-muted leading-relaxed'>
               Every design token — colors, spacing, motion, typography — as a
@@ -83,7 +83,7 @@ const McpPage = () =>
           <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
               <span className='text-xs font-mono font-medium text-brand bg-brand/10 px-2 py-0.5 rounded'>resource</span>
-              <code className='text-sm font-mono text-text'>obi://patterns</code>
+              <code className='text-sm font-mono text-text'>dafink://patterns</code>
             </div>
             <p className='text-sm text-text-muted leading-relaxed'>
               The list of design pattern documents: accessibility guidelines,
@@ -162,7 +162,7 @@ const McpPage = () =>
       <section className='flex flex-col gap-4'>
         <h2 className='text-xl font-semibold text-text'>How it changes your workflow</h2>
         <p className='text-sm text-text-muted leading-relaxed'>
-          Without the MCP server, asking an AI to &quot;build a form using Obi
+          Without the MCP server, asking an AI to &quot;build a form using DaFink
           UI&quot; is a gamble — it may hallucinate prop names, invent variants that
           don&apos;t exist, or use an old API it saw in training data.
         </p>
