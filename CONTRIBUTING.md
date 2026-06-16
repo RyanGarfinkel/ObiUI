@@ -1,14 +1,14 @@
-# Contributing to Obi UI
+# Contributing to DaFink UI
 
-Obi UI is open source and contributions are welcome. This guide covers how to set up the project, the rules you need to follow, and how to submit your work.
+DaFink UI is open source and contributions are welcome. This guide covers how to set up the project, the rules you need to follow, and how to submit your work.
 
 ---
 
 ## Getting started
 
 ```bash
-git clone https://github.com/RyanGarfinkel/ObiUI.git
-cd ObiUI
+git clone https://github.com/RyanGarfinkel/DaFinkUI.git
+cd DaFinkUI
 npm install
 npm run dev
 ```

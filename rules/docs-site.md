@@ -4,7 +4,7 @@ Apply this rule when working on any file under `app/`, including `app/_docs/`.
 
 ## Overview
 
-The docs site is a Next.js app that lives alongside the component library. It replaces Storybook as the primary showcase. It is built with Obi UI components — no external component libraries.
+The docs site is a Next.js app that lives alongside the component library. It replaces Storybook as the primary showcase. It is built with DaFink UI components — no external component libraries.
 
 ## Route Structure
 
@@ -49,9 +49,9 @@ The `ThemeToggle` button reads `document.documentElement.classList` to determine
 
 - `DocsSidebar` is a **Server Component** — it receives the full component list and renders links
 - `DocsSidebarLink` is a **Client Component** — it uses `usePathname()` to apply active styles
-- Sidebar groups components by category: Actions, Inputs, Display, Navigation, Forms, Disclosure, Overlay, Feedback
-- Sidebar also includes top-level links: Home, Installation
-- Sidebar is fixed on desktop, hidden on mobile (mobile nav is out of scope)
+- The category list is shared — `DocsSidebar`, `MobileNav`, and the All Components page all import `CATEGORIES` from `app/_docs/registry/categories.ts`. Never hardcode a category list; values must match registry `category` fields exactly
+- Sidebar also includes top-level links: Home, Installation, Themes, Typography, All Components, Examples, MCP Server, Design Skill
+- Sidebar is fixed on desktop (`md:` and up) and hidden below `md:`. On mobile, navigation lives in `MobileNav` — a hamburger button in the `TopNav` that opens the library's `Drawer` (side `left`) with the same links. The drawer closes on route change and follows the standard overlay accessibility contract
 
 ## Component Registry
 
@@ -82,7 +82,7 @@ export interface PropRow {
 
 ### How Dependencies Work
 
-The `dependencies` and `registryDependencies` fields power the CLI installer. When a user runs `npx @obi/ui add modal`:
+The `dependencies` and `registryDependencies` fields power the CLI installer. When a user runs `npx @dafink/ui add modal`:
 
 1. The CLI reads the `modal` registry entry
 2. It installs any `dependencies` as npm packages (`npm install date-fns` etc.)
@@ -96,7 +96,7 @@ This means a component author must correctly declare all dependencies at registr
 Each page (`app/(docs)/components/[slug]/page.tsx`) renders these sections, in this order:
 
 1. **Header** — component name (`text-3xl font-semibold tracking-tight text-text`) + description (`text-base text-text-muted leading-relaxed`)
-2. **Installation** — `npx @obi/ui add {slug}` in a `CodeBlock`; if the component has `registryDependencies`, list them as "Also installs: Button, Icon" below the command; if it has npm `dependencies`, list them as "Requires: …" in inline `font-mono text-xs` code
+2. **Installation** — `npx @dafink/ui add {slug}` in a `CodeBlock`; if the component has `registryDependencies`, list them as "Also installs: Button, Icon" below the command; if it has npm `dependencies`, list them as "Requires: …" in inline `font-mono text-xs` code
 3. **Preview** — live render with representative props, wrapped in `ComponentPreview` → `ComponentLivePreview`
 4. **Extra sections (optional, per component)** — variant demos and interactive examples (e.g. Timeline "Horizontal variant" / "Interactive example", Skeleton "Examples")
 5. **Usage** — `CodeBlock` with the registry `usage` field
@@ -174,7 +174,8 @@ These live in `app/_docs/components/`:
 | `DesignSystemPicker`  | Client | Dropdown/toggle that switches the active sample design system       |
 | `CodeBlock`           | Server | `<pre><code>` with token background and horizontal scroll           |
 | `PropsTable`          | Server | Renders a prop rows table from `PropRow[]`                          |
-| `ComponentPreview`    | Server | Wrapper div that centers/pads the live component demo               |
+| `ComponentPreview`    | Client | Wrapper that centers/pads the live demo; horizontally scrollable with conditional focusability when content overflows |
+| `MobileNav`           | Client | Hamburger + left `Drawer` with navigation links only; shown below `md:` |
 
 ## Styling Rules
 
@@ -183,6 +184,16 @@ These live in `app/_docs/components/`:
 - `CodeBlock` background: `bg-surface-active`, text: `text-text`, font: `font-mono text-sm`
 - Sidebar width: `w-56` on desktop
 - Main content max-width: `max-w-3xl`
+
+## Responsive Rules
+
+The docs site follows the "Responsive Design" section of `src/patterns/design.md` — mobile-first, no horizontal page scroll at any width ≥ 320px.
+
+- Main content: `px-4 py-8` base, `md:ml-56 md:px-8 md:py-10` — the sidebar margin only exists at `md:` and up; always include `min-w-0` on the flex main so wide children scroll within their containers instead of widening the page
+- Fixed-width demo content needs `max-w-full` so it shrinks inside `ComponentPreview` at narrow widths
+- Wide content (tables, code, previews) scrolls inside its own container (`overflow-x-auto`); scrollable containers get conditional focusability (tabIndex 0 + `role="region"` + label + focus ring **only when actually overflowing** — see `CodeBlock`/`ComponentPreview` for the ResizeObserver pattern)
+- Touch targets in docs chrome: 44px minimum below `md:` (`h-11 w-11 md:h-8 md:w-8` for icon buttons)
+- The `MobileNav` drawer contains navigation links only — do not inject settings or pickers into it. Header controls that don't fit on phones are hidden below `sm:` if they are non-essential niceties (the design-system theme picker does this; the dark-mode toggle always stays). Never let the header wrap or overflow
 
 ## Usage Code and Preview Must Align
 
@@ -196,8 +207,6 @@ This rule exists because users copy from the usage code block and expect it to r
 
 ## What Not to Build
 
-- No search
 - No versioning
-- No mobile nav (sidebar hidden on mobile is fine)
 - No syntax highlighting library — plain `<pre><code>` only
 - No MDX — all content is in the registry TypeScript file

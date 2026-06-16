@@ -23,3 +23,6 @@ Before building any interactive component that involves overlays, focus manageme
 - Minimum contrast: 4.5:1 for body text, 3:1 for large text and UI components — tokens are pre-validated
 - Every component must be keyboard-navigable — see `src/patterns/accessibility.md`
 - Popups and overlays require focus trap (modals) or managed focus (menus), Escape to close, and focus return to trigger — see `src/patterns/accessibility.md`
+- Mobile-first: unprefixed styles target phones; layer up with `sm:`/`md:`/`lg:` — never patch desktop down with `max-*` variants. See "Responsive Design" in `src/patterns/design.md`
+- Touch targets: 44×44px minimum on touch devices, 8px between adjacent targets; hover-only affordances need a tap/focus equivalent
+- Component-internal layout responds to its container (`@container`), not the viewport; viewport breakpoints are for page-level layout only
