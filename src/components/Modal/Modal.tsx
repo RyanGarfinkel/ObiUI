@@ -133,7 +133,7 @@ const Modal = (
 		};
 		dialog.addEventListener('cancel', onCancel);
 		return () => dialog.removeEventListener('cancel', onCancel);
-	});
+	}, []);
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLDialogElement>) =>
 	{
@@ -188,8 +188,7 @@ const Modal = (
 				role='dialog'
 				aria-modal='true'
 				aria-labelledby={titleId}
-				style={{ width: '100vw', height: '100dvh', maxWidth: '100%', maxHeight: '100%', margin: 0 }}
-				className='fixed inset-0 flex items-center justify-center px-4 p-0 border-0 bg-transparent overflow-visible'
+				className='fixed inset-0 m-0 p-0 border-0 w-screen h-dvh max-w-full max-h-full flex items-center justify-center bg-transparent overflow-visible'
 				onPointerDown={handleBackdropPointerDown}
 				onKeyDown={handleKeyDown}
 				{...props}

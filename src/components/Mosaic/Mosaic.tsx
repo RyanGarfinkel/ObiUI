@@ -332,7 +332,8 @@ export const Mosaic = (
 		if(!gridRef.current) return;
 		const compute = () =>
 		{
-			const w = gridRef.current!.offsetWidth;
+			if(!gridRef.current) return;
+			const w = gridRef.current.offsetWidth;
 			setColWidth((w - (colsRef.current - 1) * gapRef.current) / colsRef.current);
 		};
 		compute();
