@@ -20,17 +20,27 @@ A clickable control that triggers an action.
 | sm   | 32px   | Compact / inline use  |
 | md   | 36px   | Default               |
 | lg   | 44px   | Prominent / hero use  |
+| icon | 36px   | Square icon button    |
 
 ## Props
 
-| Prop      | Type                                                           | Default   |
-|-----------|----------------------------------------------------------------|-----------|
-| variant   | primary \| secondary \| outlined \| ghost \| link \| destructive | primary   |
-| size      | sm \| md \| lg                                    | md        |
-| disabled  | boolean                                           | false     |
-| className | string                                            | —         |
+| Prop      | Type                                                               | Default   |
+|-----------|--------------------------------------------------------------------|-----------|
+| variant   | primary \| secondary \| outlined \| ghost \| link \| destructive  | primary   |
+| size      | sm \| md \| lg \| icon                                            | md        |
+| loading   | boolean                                                            | false     |
+| disabled  | boolean                                                            | false     |
+| className | string                                                             | —         |
 
 Extends all native `<button>` HTML attributes.
+
+## Icon Size
+
+`size="icon"` renders the button as a 36×36px square with no horizontal padding, centering the child. All six variants work. **Requires `aria-label`** when there is no visible text label.
+
+## Loading State
+
+When `loading` is `true`: a spinner replaces children, the button is disabled, and `aria-busy="true"` is set so screen readers announce the state. The button remains in the DOM and preserves its size.
 
 ## Interactive States
 

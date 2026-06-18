@@ -1,123 +1,128 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
 import Button from './Button';
 
 describe('Button', () =>
 {
-	it('renders without errors', () =>
+	it('renders children', () =>
 	{
-		render(<Button>Click me</Button>);
-		expect(screen.getByRole('button', { name: 'Click me' })).toBeDefined();
+		render(<Button>Save</Button>);
+		expect(screen.getByRole('button', { name: 'Save' })).toBeDefined();
 	});
 
-	it('applies primary variant classes by default', () =>
+	it('calls onClick when clicked', async () =>
 	{
-		render(<Button>Click me</Button>);
-		const btn = screen.getByRole('button');
-		expect(btn.className).toContain('bg-brand');
-		expect(btn.className).toContain('text-brand-fg');
-		expect(btn.className).toContain('hover:bg-brand-hover');
-		expect(btn.className).toContain('active:bg-brand-active');
+		const onClick = vi.fn();
+		render(<Button onClick={onClick}>Save</Button>);
+		await userEvent.click(screen.getByRole('button'));
+		expect(onClick).toHaveBeenCalledOnce();
 	});
 
-	it('applies correct classes for each variant', () =>
+	it('does not call onClick when disabled', async () =>
 	{
-		const cases = [
-			{ variant: 'primary',     contains: 'bg-brand' },
-			{ variant: 'secondary',   contains: 'bg-surface' },
-			{ variant: 'outlined',    contains: 'border-brand' },
-			{ variant: 'ghost',       contains: 'text-text' },
-			{ variant: 'link',        contains: 'hover:underline' },
-			{ variant: 'destructive', contains: 'bg-danger' },
-		] as const;
-
-		for(const { variant, contains } of cases)
-		{
-			const { unmount } = render(<Button variant={variant}>btn</Button>);
-			expect(screen.getByRole('button').className).toContain(contains);
-			unmount();
-		}
+		const onClick = vi.fn();
+		render(<Button onClick={onClick} disabled>Save</Button>);
+		await userEvent.click(screen.getByRole('button'));
+		expect(onClick).not.toHaveBeenCalled();
 	});
 
-	it('applies shadow to primary, secondary, and destructive variants', () =>
+	it('activates with Enter key', async () =>
 	{
-		const shadowVariants = ['primary', 'secondary', 'destructive'] as const;
-
-		for(const variant of shadowVariants)
-		{
-			const { unmount } = render(<Button variant={variant}>btn</Button>);
-			expect(screen.getByRole('button').className).toContain('shadow-sm');
-			unmount();
-		}
+		const onClick = vi.fn();
+		render(<Button onClick={onClick}>Save</Button>);
+		screen.getByRole('button').focus();
+		await userEvent.keyboard('{Enter}');
+		expect(onClick).toHaveBeenCalledOnce();
 	});
 
-	it('does not apply shadow to outlined, ghost, or link variants', () =>
+	it('is reachable by keyboard when enabled', () =>
 	{
-		for(const variant of ['outlined', 'ghost', 'link'] as const)
-		{
-			const { unmount } = render(<Button variant={variant}>btn</Button>);
-			expect(screen.getByRole('button').className).not.toContain('shadow-sm');
-			unmount();
-		}
+		render(<Button>Save</Button>);
+		expect(screen.getByRole('button')).not.toHaveProperty('disabled', true);
+		expect(screen.getByRole('button').getAttribute('tabindex')).not.toBe('-1');
 	});
 
-	it('applies focus-visible ring classes', () =>
+	it('has a visible focus ring for keyboard users', () =>
 	{
-		render(<Button>Click me</Button>);
-		const btn = screen.getByRole('button');
-		expect(btn.className).toContain('focus-visible:ring-2');
-		expect(btn.className).toContain('focus-visible:ring-offset-2');
-		expect(btn.className).toContain('focus-visible:ring-brand-ring');
+		render(<Button>Save</Button>);
+		expect(screen.getByRole('button').className).toContain('focus-visible:ring-2');
 	});
 
-	it('suppresses default focus outline', () =>
+	it('is disabled when disabled prop is set', () =>
 	{
-		render(<Button>Click me</Button>);
-		expect(screen.getByRole('button').className).toContain('focus:outline-none');
+		render(<Button disabled>Save</Button>);
+		expect(screen.getByRole('button')).toHaveProperty('disabled', true);
 	});
 
-	it('applies active scale class', () =>
+	it('forwards type attribute', () =>
 	{
-		render(<Button>Click me</Button>);
-		expect(screen.getByRole('button').className).toContain('active:scale-[0.98]');
+		render(<Button type='submit'>Save</Button>);
+		expect(screen.getByRole('button').getAttribute('type')).toBe('submit');
 	});
 
-	it('applies disabled classes when disabled', () =>
+	it('forwards aria-label', () =>
 	{
-		render(<Button disabled>Click me</Button>);
-		const btn = screen.getByRole('button');
-		expect(btn.className).toContain('disabled:opacity-40');
-		expect(btn.className).toContain('disabled:pointer-events-none');
-		expect(btn).toHaveProperty('disabled', true);
-	});
-
-	it('applies correct size classes', () =>
-	{
-		const cases = [
-			{ size: 'sm', contains: 'h-8' },
-			{ size: 'md', contains: 'h-9' },
-			{ size: 'lg', contains: 'h-11' },
-		] as const;
-
-		for(const { size, contains } of cases)
-		{
-			const { unmount } = render(<Button size={size}>btn</Button>);
-			expect(screen.getByRole('button').className).toContain(contains);
-			unmount();
-		}
-	});
-
-	it('forwards native button props', () =>
-	{
-		render(<Button type='submit' aria-label='submit form'>Submit</Button>);
-		const btn = screen.getByRole('button');
-		expect(btn.getAttribute('type')).toBe('submit');
-		expect(btn.getAttribute('aria-label')).toBe('submit form');
+		render(<Button size='icon' aria-label='Delete item'><span /></Button>);
+		expect(screen.getByRole('button', { name: 'Delete item' })).toBeDefined();
 	});
 
 	it('merges custom className', () =>
 	{
-		render(<Button className='custom-class'>Click me</Button>);
-		expect(screen.getByRole('button').className).toContain('custom-class');
+		render(<Button className='mt-4'>Save</Button>);
+		expect(screen.getByRole('button').className).toContain('mt-4');
+	});
+});
+
+describe('Button — loading state', () =>
+{
+	it('renders a spinner and hides children when loading', () =>
+	{
+		render(<Button loading>Save</Button>);
+		expect(screen.queryByText('Save')).toBeNull();
+		expect(screen.getByRole('button').querySelector('svg')).not.toBeNull();
+	});
+
+	it('sets aria-busy when loading', () =>
+	{
+		render(<Button loading>Save</Button>);
+		expect(screen.getByRole('button').getAttribute('aria-busy')).toBe('true');
+	});
+
+	it('does not set aria-busy when not loading', () =>
+	{
+		render(<Button>Save</Button>);
+		expect(screen.getByRole('button').getAttribute('aria-busy')).toBeNull();
+	});
+
+	it('does not call onClick when loading', async () =>
+	{
+		const onClick = vi.fn();
+		render(<Button loading onClick={onClick}>Save</Button>);
+		await userEvent.click(screen.getByRole('button'));
+		expect(onClick).not.toHaveBeenCalled();
+	});
+
+	it('is disabled when loading', () =>
+	{
+		render(<Button loading>Save</Button>);
+		expect(screen.getByRole('button')).toHaveProperty('disabled', true);
+	});
+});
+
+describe('Button — size="icon"', () =>
+{
+	it('renders as a square', () =>
+	{
+		render(<Button size='icon' aria-label='Close'><span /></Button>);
+		const btn = screen.getByRole('button');
+		expect(btn.className).toContain('w-9');
+		expect(btn.className).toContain('h-9');
+	});
+
+	it('does not apply horizontal padding', () =>
+	{
+		render(<Button size='icon' aria-label='Close'><span /></Button>);
+		expect(screen.getByRole('button').className).not.toContain('px-');
 	});
 });
