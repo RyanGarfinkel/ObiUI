@@ -64,8 +64,8 @@ const McpPage = () =>
               <code className='text-sm font-mono text-text'>dafink://components</code>
             </div>
             <p className='text-sm text-text-muted leading-relaxed'>
-              The full component registry — every slug, name, category,
-              description, props, and dependency list.
+              Full registry for every component — slug, name, category,
+              description, props table, usage code, and dependency list.
             </p>
           </div>
 
@@ -93,13 +93,59 @@ const McpPage = () =>
 
           <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
+              <span className='text-xs font-mono font-medium text-brand bg-brand/10 px-2 py-0.5 rounded'>resource</span>
+              <code className='text-sm font-mono text-text'>dafink://rules</code>
+            </div>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              The list of project rule documents — coding standards, component
+              creation rules, token usage, commit conventions, and more.
+            </p>
+          </div>
+
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
+            <div className='flex items-center gap-2'>
               <span className='text-xs font-mono font-medium text-text-muted bg-surface-active px-2 py-0.5 rounded'>tool</span>
               <code className='text-sm font-mono text-text'>get_component_spec</code>
             </div>
             <p className='text-sm text-text-muted leading-relaxed'>
               Returns the full <code className='font-mono text-xs'>spec.md</code> for a
-              named component — props, variants, accessibility notes, and usage
-              guidance.
+              named component — variants, interactive states, accessibility notes,
+              and design guidance.
+            </p>
+          </div>
+
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-xs font-mono font-medium text-text-muted bg-surface-active px-2 py-0.5 rounded'>tool</span>
+              <code className='text-sm font-mono text-text'>get_component_registry_entry</code>
+            </div>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Returns the registry entry for a component — working usage code,
+              structured props, npm dependencies, and category. Accepts name or slug.
+            </p>
+          </div>
+
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-xs font-mono font-medium text-text-muted bg-surface-active px-2 py-0.5 rounded'>tool</span>
+              <code className='text-sm font-mono text-text'>search_components</code>
+            </div>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Searches name, slug, category, and description. Use when you know
+              what you need but not the exact component name — e.g.{' '}
+              <code className='font-mono text-xs'>&quot;loading indicator&quot;</code>.
+            </p>
+          </div>
+
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-xs font-mono font-medium text-text-muted bg-surface-active px-2 py-0.5 rounded'>tool</span>
+              <code className='text-sm font-mono text-text'>list_by_category</code>
+            </div>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Lists components by category. Pass a category name like{' '}
+              <code className='font-mono text-xs'>&quot;Overlay&quot;</code> to filter,
+              or omit to get all components grouped by category.
             </p>
           </div>
 
@@ -112,6 +158,19 @@ const McpPage = () =>
               Returns a named pattern document by slug — e.g.{' '}
               <code className='font-mono text-xs'>&quot;accessibility&quot;</code> or{' '}
               <code className='font-mono text-xs'>&quot;design&quot;</code>.
+            </p>
+          </div>
+
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-xs font-mono font-medium text-text-muted bg-surface-active px-2 py-0.5 rounded'>tool</span>
+              <code className='text-sm font-mono text-text'>get_rule</code>
+            </div>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Returns a project rule document by name — e.g.{' '}
+              <code className='font-mono text-xs'>&quot;new-component&quot;</code>,{' '}
+              <code className='font-mono text-xs'>&quot;code&quot;</code>, or{' '}
+              <code className='font-mono text-xs'>&quot;tokens&quot;</code>.
             </p>
           </div>
         </div>
@@ -158,6 +217,38 @@ const McpPage = () =>
         </p>
       </section>
 
+      {/* Prompts */}
+      <section className='flex flex-col gap-4'>
+        <h2 className='text-xl font-semibold text-text'>Built-in prompts</h2>
+        <p className='text-sm text-text-muted leading-relaxed'>
+          The server ships three curated prompts that wire up the right tool calls
+          automatically — invoke them from any MCP client that supports prompts.
+        </p>
+        <div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-1'>
+            <code className='text-sm font-mono font-medium text-text'>use-component</code>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Fetches both the spec and registry entry for a component, then
+              returns the import path, a working example, and the key props.
+            </p>
+          </div>
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-1'>
+            <code className='text-sm font-mono font-medium text-text'>create-component</code>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Pulls in the new-component rules, coding standards, accessibility
+              patterns, and design philosophy before generating all required files.
+            </p>
+          </div>
+          <div className='rounded-lg border border-surface-border bg-surface p-4 flex flex-col gap-1'>
+            <code className='text-sm font-mono font-medium text-text'>find-component</code>
+            <p className='text-sm text-text-muted leading-relaxed'>
+              Searches the registry by use case and recommends the best
+              component(s) with a usage example.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* How it helps */}
       <section className='flex flex-col gap-4'>
         <h2 className='text-xl font-semibold text-text'>How it changes your workflow</h2>
@@ -168,16 +259,17 @@ const McpPage = () =>
         </p>
         <p className='text-sm text-text-muted leading-relaxed'>
           With the server connected, Claude can call{' '}
-          <code className='font-mono text-xs'>get_component_spec(&quot;Form&quot;)</code> before
-          writing any code. It gets the exact prop table, the correct import
-          path, the variants that actually exist, and the accessibility guidance
-          for that component. The result is code that works the first time.
+          <code className='font-mono text-xs'>get_component_registry_entry(&quot;Form&quot;)</code>{' '}
+          before writing any code. It gets a working import, a runnable usage
+          example, the exact prop table, and the component&apos;s dependencies —
+          not prose, but structured data it can use directly.
         </p>
         <p className='text-sm text-text-muted leading-relaxed'>
-          The server also exposes the full accessibility and design pattern
-          documents, so Claude understands the visual philosophy, token
-          naming conventions, and overlay interaction rules — not just individual
-          component APIs.
+          When the right component isn&apos;t obvious,{' '}
+          <code className='font-mono text-xs'>search_components(&quot;date picker&quot;)</code>{' '}
+          finds it. When rules matter,{' '}
+          <code className='font-mono text-xs'>get_rule(&quot;new-component&quot;)</code>{' '}
+          returns the current spec — not whatever the model was trained on.
         </p>
       </section>
 

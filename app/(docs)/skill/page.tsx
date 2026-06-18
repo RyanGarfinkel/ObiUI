@@ -49,7 +49,7 @@ const SkillPage = () =>
         </p>
         <div className='flex flex-wrap gap-3'>
           <a
-            href='/dafink-ui.skill'
+            href='/dafink-ui.md'
             download
             className='inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-brand-fg transition-colors duration-[var(--duration-fast)] hover:bg-brand-hover active:bg-brand-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-ring'
           >
@@ -58,7 +58,7 @@ const SkillPage = () =>
               <polyline points='7 10 12 15 17 10' />
               <line x1='12' y1='15' x2='12' y2='3' />
             </svg>
-            Download dafink-ui.skill
+            Download dafink-ui.md
           </a>
         </div>
       </section>
@@ -73,10 +73,9 @@ const SkillPage = () =>
         <p className='text-sm text-text-muted leading-relaxed'>
           Or download the file above and drop it into your skills directory —{' '}
           <code className='font-mono text-xs'>.claude/skills/</code> for
-          Claude Code, or the equivalent directory for Cowork. The skill is a
-          single zipped folder containing one <code className='font-mono text-xs'>SKILL.md</code>{' '}
-          file; no build step or extraction required beyond what your tool
-          already does for installed skills.
+          Claude Code, or the equivalent directory for your tool. The skill is
+          a single <code className='font-mono text-xs'>.md</code> file; no
+          build step or extraction required.
         </p>
       </section>
 

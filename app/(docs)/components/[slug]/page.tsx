@@ -1,3 +1,4 @@
+import { WorkflowBuilderShowcase } from '@/app/_docs/components/examples/WorkflowBuilderShowcase';
 import { TimelineHorizontalDemo } from '@/app/_docs/components/examples/TimelineHorizontalDemo';
 import { TimelineDeployDemo } from '@/app/_docs/components/examples/TimelineDeployDemo';
 import { SkeletonShowcase } from '@/app/_docs/components/examples/SkeletonShowcase';
@@ -96,6 +97,16 @@ const ComponentPage = async (
             Examples
           </h2>
           <SkeletonShowcase />
+        </section>
+      )}
+
+      {/* Showcase — WorkflowBuilder only */}
+      {slug === 'workflow-builder' && (
+        <section className='flex flex-col gap-3'>
+          <h2 className='text-sm font-semibold text-text uppercase tracking-wide'>
+            Examples
+          </h2>
+          <WorkflowBuilderShowcase />
         </section>
       )}
 
